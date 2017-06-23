@@ -1,0 +1,12 @@
+<DOCTYPE html>
+<head>
+{% include header.html %}
+<h1>Suggested Tutorials</h1>
+{%for tutorial in tutorials%}
+  <div>
+    <h2>{{tutorial.title}}</h2>
+
+  </div>
+{%end for%}
+</body>
+</html>

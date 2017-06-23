@@ -1,0 +1,53 @@
+====================HTML/DESIGN TEAM=====================================
+
+LOCATION OF TEMPLATES
+Please place all required templates in:
+  \projects-2017-1\templates
+This will allow the module to access the appropriate files to display.
+
+HOW TO CREATE TEMPLATE
+Write html as normal.
+You can use the features below to make it dynamic.
+
+HOW TO EMBED OTHER TEMPLATES
+{% include filename %}
+e.g.  {% include header.html %}
+
+HOW TO HAVE PYTHON IN TEMPLATES
+How to have Python expressions in template
+{{expression}}  -- will escape html text (i.e. a '>' becomes ''&gt;'')
+{{safe expression}}  -- will return the expression as raw text
+
+e.g.  {{ username }}
+e.g.  {{ username.upper() }}
+e.g.  {{ 1 + 1 }}
+e.g.  if username is '<<myname '{{ safe username }} will return username as is
+
+How to have if-statements
+{% if predicate %} what to do if predicate is True {% end if %}
+e.g.  {% if user_logged_in %} user {{username}} is logged in {% end if %}
+
+
+How to have for loops
+{% for variable in expression %} block to repeat {% end for %}
+e.g.  {% for user in users %} {{user}} exists {% end for %}
+
+
+How to have comments
+{% comment %} comment text {% end comment %}
+e.g.  {% comment %} this section sets the username {% end comment %}
+
+
+How to change variable in context dictionary
+{% let variable = expression %}
+e.g.  {% let username = 'hocrux' %} {{ username }}
+this will then output username as hocrux
+
+=====================TORNADO TEAM=======================================
+
+HOW TO IMPORT MODULE
+from template_language.parser import render_template
+
+HOW TO USE MODULE
+render_template('filename', {context})
+e.g.  render_template('test.html', {'username' : 'JaneSmith', 'password' : 'plaintextpasswordyay'})

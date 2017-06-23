@@ -1,0 +1,23 @@
+<title>{{title}}</title>
+</head>
+<body>
+<header>
+  <img src="static/img/logo.png" id="logo">
+  <h1>Random Heading</h1>
+  <form>
+    {%if user is not None%}
+      <img src="static/user_img/{{user.image}}" id="profile_img">
+      <h3>Welcome, {{user.name}}!</h3>
+      <button type="submit">
+    {%end if%}
+    {%if user is None%}
+      <button type="submit">
+    {%end if%}
+  </form>
+</header>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tutorials">Tutorials</a>
+  <a href="/flagged">Flagged</a>
+  <a href="/svgchecker">SVG Checker</a>
+</nav>
