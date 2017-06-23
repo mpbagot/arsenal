@@ -1,0 +1,16 @@
+<DOCTYPE html>
+<head>
+{%include header.html%}
+<article>
+  <h1>Flagged Tutorials</h1>
+  {%for i, flag_tutor in enumerate(user.getFlaggedTutorials())%}
+    <div id="flag_{{i}}" class="flagged_tutorial">
+      <img src="static/img/tutor_img/{{flag_tutor.id}}.png">
+      <h3>{{flag_tutor.title}}</h3>
+      <p>{{flag_tutor.description}}</p>
+      <a href="unflag({{i}})">Unflag</a>
+    </div>
+  {%end for%}
+</article>
+</body>
+</html>
