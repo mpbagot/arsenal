@@ -4,19 +4,18 @@
   <script src="static/js/jquery-3.2.1.min.js"></script>
   {%include header.html%}
   <article>
-    <h1>SVG Checker</h1>
+    <h1 id="title">SVG Checker</h1>
     <form action="" method="post" enctype="multipart/form-data" class="box">
-      <!-- <img src="" id="preview"> -->
       <div class="box__input">
-        <input class="box__file" type="file" name="svg_upload" id="svg_upload" data-multiple-caption="{count} files selected" multiple />
+        <input class="box__file" style="padding-top: 0" type="file" name="svg_upload" id="svg_upload" data-multiple-caption="{count} files selected" multiple />
         <label for="svg_upload"><strong id="upload_button">Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
         <button class="box__button" id="box__button" type="submit">Upload</button>
       </div>
       <div class="box__uploading">Uploading&hellip;</div>
       <div class="box__success">Done!</div>
-      <div class="box__error">Error! <span></span>.</div>
+      <div class="box__error">Error!<span></span></div>
     </form>
-    <p>Some random description of the checker here</p>
+    <p>Some random description of the checker here.</p>
   </article>
   <script src="static/js/checker.js"></script>
 </body>

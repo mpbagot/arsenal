@@ -1,11 +1,49 @@
+body {
+  font-family: sans-serif;
+}
+
 header {
   height: 150px;
-  background-color: lightgreen;
+  background-color: lightgray;
 }
 nav {
-  background-color: lightblue;
+  width: 80%;
+  margin: 0 auto;
+  padding: 5px 10%;
+  background-color: gray;
 }
 a {
+  font-size: 15pt;
   text-decoration: none;
+  display: inline-block;
   color: black;
+  text-align: center;
+  margin: auto;
+  width: 24%;
+}
+
+img, h1, button {
+  display: inline;
+  margin-left: 5%;
+}
+
+img {
+  width: 10%;
+  margin-left: 5%;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: -105px;
+  margin-left: 85%;
+  width: 10%;
+  height: 40px;
+}
+
+#header_heading {
+  font-size: 50pt;
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  left: 20%;
 }

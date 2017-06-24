@@ -8,9 +8,20 @@
 
 .box {
   height: 400px;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 60%;
   background-color: lightblue;
+}
+
+div {
+  text-align: center;
+  padding-top: 20%;
+}
+
+.box__uploading,
+.box__success,
+.box__error {
+  padding-top: 0;
 }
 
 #upload_button:hover {
@@ -48,4 +59,16 @@
 
 #preview {
   display: none;
+}
+
+p {
+  width: 50%;
+  margin: 20px auto;
+}
+
+#title {
+  margin-top: 20px;
+  display: block;
+  text-align: left;
+  margin-left: 15%;
 }
