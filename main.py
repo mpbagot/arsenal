@@ -34,7 +34,9 @@ def flagged_handler(request):
     '''
     Handle the flagged tutorials page
     '''
-    html = render_template('flagged.html', { 'title':'Flagged Tutorials', 'user' : None})
+    html = render_template('flagged.html', { 'title':'Flagged Tutorials', 'user' : None,
+                                             'flag_tutors' : user.getFlaggedTutorials()
+                                            })
     request.write(html)
 
 def checker_handler(request):

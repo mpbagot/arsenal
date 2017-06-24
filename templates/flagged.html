@@ -2,12 +2,12 @@
 <head>
 {%include header.html%}
 <article>
-  <h1>Flagged Tutorials</h1>
-  {%for i, flag_tutor in enumerate(user.getFlaggedTutorials())%}
+  <h1 id="title">Flagged Tutorials</h1>
+  {%for i in range(len(flag_tutors))%}
     <div id="flag_{{i}}" class="flagged_tutorial">
       <img src="static/img/tutor_img/{{flag_tutor.id}}.png">
-      <h3>{{flag_tutor.title}}</h3>
-      <p>{{flag_tutor.description}}</p>
+      <h3>{{flag_tutors[i].title}}</h3>
+      <p>{{flag_tutors[i].description}}</p>
       <a href="unflag({{i}})">Unflag</a>
     </div>
   {%end for%}

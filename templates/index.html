@@ -1,8 +1,9 @@
 <DOCTYPE html>
 <head>
+<link rel="stylesheet" href="static/css/index.css">
 {% include header.html %}
 <article>
-  <h1>Suggested Tutorials</h1>
+  <h1 id="title">Suggested Tutorials</h1>
   {%for tutorial in tutorials%}
     <div>
       <h2>{{tutorial.title}}</h2>
