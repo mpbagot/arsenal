@@ -1,0 +1,11 @@
+header {
+  height: 150px;
+  background-color: lightgreen;
+}
+nav {
+  background-color: lightblue;
+}
+a {
+  text-decoration: none;
+  color: black;
+}

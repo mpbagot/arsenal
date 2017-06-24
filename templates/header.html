@@ -1,4 +1,5 @@
 <title>{{title}}</title>
+<link rel="stylesheet" href="static/css/header.css">
 </head>
 <body>
 <header>
@@ -8,10 +9,10 @@
     {%if user is not None%}
       <img src="static/user_img/{{user.image}}" id="profile_img">
       <h3>Welcome, {{user.name}}!</h3>
-      <button type="submit">
+      <button type="submit">Sign Out</button>
     {%end if%}
     {%if user is None%}
-      <button type="submit">
+      <button type="submit">Log In</button>
     {%end if%}
   </form>
 </header>

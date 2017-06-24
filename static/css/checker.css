@@ -1,0 +1,51 @@
+.box__uploading,
+.box__dragndrop,
+.box__success,
+.box__file,
+.box__error {
+  display: none;
+}
+
+.box {
+  height: 400px;
+  margin: 0 auto;
+  width: 60%;
+  background-color: lightblue;
+}
+
+#upload_button:hover {
+  color: royalblue;
+}
+
+.box.has-advanced-upload {
+  outline: 2px dashed black;
+  outline-offset: -10px;
+}
+
+.box.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+
+.box.is-dragover {
+  background-color: grey;
+}
+
+.box.is-uploading .box__input {
+  visibility: none;
+}
+
+.box.is-uploading .box__uploading {
+  display: block;
+}
+
+.box.is-success .box__success {
+  display: block;
+}
+
+.box.is-error .box__error {
+  display: block;
+}
+
+#preview {
+  display: none;
+}
