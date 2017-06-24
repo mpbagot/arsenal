@@ -52,7 +52,7 @@ def upload_handler(request):
     '''
     method = request.request.method
     if method != "POST":
-        checker_handler(request)
+        request.redirect('/svgchecker')
     elif method == "POST":
         fileTuple = request.get_file('laser_img')
         fileData = fileTuple[-1]
