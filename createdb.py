@@ -14,10 +14,20 @@ cur.execute('''
   	image TEXT NOT NULL,
     completed TEXT,
     flagged TEXT,
+    class INTEGER,
+    is_teacher BOOLEAN,
   	PRIMARY KEY (id)
 );
 '''
 )
+
+cur.execute('''
+    CREATE TABLE classes (
+        id INTEGER NOT NULL,
+        teacher_id INTEGER NOT NULL,
+        PRIMARY KEY (id)
+    );
+''')
 
 cur.execute('''
   CREATE TABLE units (

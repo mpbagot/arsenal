@@ -9,7 +9,8 @@ cur = conn.cursor()
 
 class Tutorial:
     '''
-    Has a list of external resources, unit_id, title, isImage(main media video or img), main image/video, uid, and paragraph list
+    Has a list of external resources, unit_id, title,
+    isImage(main media video or img), main image/video, uid, and paragraph list
     '''
     def save(self):
         pass
@@ -28,9 +29,9 @@ class Tutorial:
 
 class User:
     '''
-    has a name, image, and completed and flagged tutorial lists.
+    has a name, image, is_teacher, class (part of, not leading) and completed and flagged tutorial lists.
     '''
-    def init(self, password, shouldHash=True):
+    def __init__(self, password, shouldHash=True):
         self.password = password
         if shouldHash:
             # Hash the hash 100 times for additional security!
@@ -91,6 +92,24 @@ class User:
                 tutorials.append(Tutorial.get(uid))
         # Return the tutorial list.
         return tutorials
+
+    @staticmethod
+    def get(id):
+        pass
+
+class Class:
+    '''
+    has an id, teacher_id
+    '''
+    def save(self):
+        pass
+
+    def add(self):
+        pass
+
+    def delete(self):
+        cur.execute('''DELETE FROM classes WHERE id = ?''', (self.id,))
+        conn.commit()
 
     @staticmethod
     def get(id):
