@@ -11,7 +11,6 @@ cur.execute('''
   	id INTEGER NOT NULL,
   	username TEXT NOT NULL,
   	password TEXT NOT NULL,
-  	image TEXT NOT NULL,
     completed TEXT,
     flagged TEXT,
     class INTEGER,
@@ -33,7 +32,7 @@ cur.execute('''
   CREATE TABLE units (
   	id INTEGER NOT NULL,
   	title TEXT NOT NULL,
-  	PRIMARY KEY (id),
+  	PRIMARY KEY (id)
 );
 '''
 )
