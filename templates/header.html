@@ -5,14 +5,14 @@
 <header>
   <img src="static/img/logo.png" id="logo">
   <h1 id="header_heading">Random Heading</h1>
-  <form>
+  <form action="/login">
     {%if user is not None%}
       <img src="static/user_img/{{user.image}}" id="profile_img">
       <h3>Welcome, {{user.name}}!</h3>
-      <button type="submit">Sign Out</button>
+      <button id="loginbutton" type="submit">Sign Out</button>
     {%end if%}
     {%if user is None%}
-      <button type="submit">Log In</button>
+      <button id="loginbutton" type="submit">Log In</button>
     {%end if%}
   </form>
 </header>

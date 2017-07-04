@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="static/css/result.css">
+    {% include header.html %}
+    <article>
+      <img id="result" src="{{image}}">
+      <h4 id="main_result">{{result[0]}}</h4>
+      <ul>
+        {%for i in range(len(result)-1)%}
+          <li>{{result[i+1]}}</li>
+        {%end for%}
+      </ul>
+    </article>
+  </body>
+</html>
