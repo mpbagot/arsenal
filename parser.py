@@ -99,6 +99,4 @@ class TagNode:
         # Find an invalid stroke width attribute
         elif a == "stroke-width":
             if val != '0.001':
-                self.errors.append('Incorrect line width in {} object'.format(self.tag_type))
-
-
+                self.errors.append('Incorrect stroke width in {} object'.format(self.tag_type))
