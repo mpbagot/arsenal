@@ -1,0 +1,15 @@
+#result {
+  display: block;
+  margin: 20px auto;
+  width: 50%;
+  border: 3px dashed gray;
+}
+
+#main_result {
+  margin-left: 15%;
+}
+
+ul {
+  width: 62%;
+  margin: 0 auto;
+}
