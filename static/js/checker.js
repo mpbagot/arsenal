@@ -37,7 +37,6 @@ if (isAdvancedUpload()) {
 
     for (var i = 0; i < droppedFiles.length; i++) {
       var file = droppedFiles[i];
-      console.log(file.name.substring(file.name.length-4, file.name.length));
       if (file.name.substring(file.name.length-4, file.name.length) != '.svg') {
         $form.addClass('is-error');
         $form.removeClass('is-uploading');
@@ -52,9 +51,10 @@ if (isAdvancedUpload()) {
 
     xhr.onload = function() {
       $form.removeClass('is-uploading');
+      console.log('done');
       if (xhr.status == 200) {
-        document.getElementsByClassName('box__input')[0].style.background = "url(static/img/tmp_upload/"+xhr.responseText.split('|')[0]+")";
-        document.getElementsByClassName('box__success')[0].innerHTML = xhr.responseText.split('|')[1];
+        document.write(xhr.responseText);
+        document.close();
         $form.addClass('is-success');
       } else {
         $form.addClass('is-error');
