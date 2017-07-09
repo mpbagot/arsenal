@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 from tornado.ncss import Server
 from template_language.parser import render_template
-from parser import SVGParser
+from svg_parser import SVGParser
 from db import *
 
 def isLoggedIn(function):
