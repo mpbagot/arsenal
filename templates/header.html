@@ -1,24 +1,22 @@
-<title>{{title}}</title>
-<!-- <link rel="stylesheet" href="static/css/header.css"> -->
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="static/css/header.css">
 </head>
 <body>
-<!-- <header>
-  <img src="static/img/logo.png" id="logo">
-  <h1 id="header_heading">Random Heading</h1>
-  <form action="/login">
-    {%if user is not None%}
+  <header>
+    <form action="/login">
       <img src="<INSERT PEPPER&CARROT CAT AVATER GENERATOR URL HERE>?seed={{user.name}}" id="profile_img">
       <h3>Welcome, {{user.name}}!</h3>
       <button id="loginbutton" type="submit">Sign Out</button>
-    {%end if%}
-    {%if user is None%}
-      <button id="loginbutton" type="submit">Log In</button>
-    {%end if%}
-  </form>
-</header>
-<nav>
-  <a href="/">Home</a>
-  <a href="/tutorials">Tutorials</a>
-  <a href="/flagged">Flagged</a>
-  <a href="/svgchecker">SVG Checker</a>
-</nav> -->
+    </form>
+  </header>
+  <a href="javascript:toggleMenu();" style="display: inline;">
+    <img src="static/img/drop_down.png" id="drop_button">
+  </a>
+  <aside id="drop_menu">
+    <a href="/">Home</a>
+    <a href="/tutorials">Tutorials</a>
+    <a href="/flagged">Flagged</a>
+    <a href="/svgchecker">SVG Checker</a>
+  </aside>
+  <script src="static/js/header.js">
+  </script>

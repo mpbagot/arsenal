@@ -1,45 +1,51 @@
+@keyframes slideOut {
+  from {width: 20%;}
+  to {width: 0;}
+}
+@keyframes slideSide {
+  from {height:200px;}
+  to {height: 0;}
+}
 body {
   font-family: sans-serif;
 }
 
 header {
   height: 150px;
-  background-color: lightgray;
-}
-nav {
-  width: 80%;
-  margin: 0 auto;
-  padding: 5px 10%;
   background-color: gray;
 }
+aside {
+  width: 20%;
+  height: 0;
+  background-color: gray;
+  padding-top: 110px;
+  margin-top: -104px;
+  margin-left: 3px;
+  visibility: hidden;
+}
 a {
-  font-size: 15pt;
+  display: block;
+  margin: 4px 2px;
   text-decoration: none;
-  display: inline-block;
-  color: black;
-  text-align: center;
-  margin: auto;
-  width: 24%;
+  color: white;
 }
-
-img {
-  width: 10%;
-  margin-left: 5%;
-  margin-top: 10px;
+#drop_button {
+  width: 20%;
+  margin-top: 15px;
 }
-
-#loginbutton {
-  position: absolute;
-  top: 70px;
-  margin-left: 85%;
-  width: 10%;
-  height: 40px;
+.slideOutMenuUp {
+  animation: slideOut 0.3s ease-out 0s infinite normal;
+  -webkit-animation: slideOut 0.3s ease-out 0s infinite normal;
 }
-
-#header_heading {
-  font-size: 50pt;
-  margin: 0;
-  position: absolute;
-  top: 50px;
-  left: 20%;
+.slideInMenuUp {
+  animation: slideOut 0.3s ease-out 0s infinite reverse;
+  -webkit-animation: slideOut 0.3s ease-out 0s infinite reverse;
+}
+.slideInMenuSide {
+  animation: slideSide 0.2s ease-out 0s infinite reverse;
+  -webkit-animation: slideSide 0.2s ease-out 0s infinite reverse;
+}
+.slideOutMenuSide {
+  animation: slideSide 0.2s ease-out 0s infinite normal;
+  -webkit-animation: slideSide 0.2s ease-out 0s infinite normal;
 }
