@@ -72,3 +72,11 @@ function toggleUserMenu() {
     }
   }
 }
+
+function adjustDropMenu(event) {
+  height = document.getElementById('drop_button').height;
+  document.getElementById('drop_menu').style.marginTop = '-'+(height+4)+'px';
+  document.getElementById('drop_menu').style.paddingTop = (height+10)+'px';
+}
+window.onresize = adjustDropMenu;
+adjustDropMenu(null);
