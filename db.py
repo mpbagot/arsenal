@@ -1,6 +1,7 @@
 import sqlite3
 import datetime
 import hashlib
+import random
 
 conn = sqlite3.connect('database.db')
 conn.execute("PRAGMA foreign_keys = ON")
@@ -151,12 +152,13 @@ class Class:
     '''
     has an id, teacher_id
     '''
-    def __init__(self, teacher_id, id=None):
+    def __init__(self, teacher_id, password=None, id=None):
         self.id = id
+        self.password = password
         self.teacher_id = teacher_id
 
     def __str__(self):
-        return 'Class(teacher_id={}, id={})'.format(self.teacher_id, self.id)
+        return 'Class(teacher_id={}, password={}, id={})'.format(self.teacher_id, self.id)
 
     def save(self):
         if self.id is None:
@@ -166,7 +168,8 @@ class Class:
         conn.commit()
 
     def add(self):
-        cur.execute('''INSERT INTO classes (teacher_id) VALUES (?)''', (self.teacher_id,))
+        self.password = Class.getUniquePassword() if self.password is None else self.password
+        cur.execute('''INSERT INTO classes (teacher_id, password) VALUES (?, ?)''', (self.teacher_id, self.password))
         self.id = cur.lastrowid
 
     def delete(self):
@@ -188,8 +191,24 @@ class Class:
         row = cur.fetchone()
         if row is None:
             return None
-        uid, teacher_id = row
-        return Class(teacher_id, uid)
+        uid, teacher_id, password = row
+        return Class(teacher_id, password, uid)
+
+    @staticmethod
+    def getByPassword(password):
+        cur.execute('''SELECT * FROM classes WHERE password = ?''', (password,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        uid, teacher_id, password = row
+        return Class(teacher_id, password, uid)
+
+    @staticmethod
+    def getUniquePassword():
+        password = generatePassword()
+        while getByPassword(password):
+            password = generatePassword()
+        return password
 
 class Unit:
     '''
@@ -273,6 +292,20 @@ class Resource:
             return None
         uid, tutorial_id, link, title = row
         return Resource(tutorial_id, link, title, uid)
+
+def generatePassword():
+    text = ''
+    # Generate a random string of digits
+    for a in range(random.randint(4, 10)):
+        text += str(random.randint(0, 9))
+    # Hash it to further randomise it
+    for a in range(random.randint(1, 5)):
+        hasher = hashlib.sha256()
+        hasher.update(text.encode())
+        text = hasher.hexdigest()
+    # Return the first 8 characters
+    return text[:8]
+
 
 if __name__ == "__main__":
     #do testing here

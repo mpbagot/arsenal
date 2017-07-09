@@ -24,6 +24,7 @@ cur.execute('''
     CREATE TABLE classes (
         id INTEGER NOT NULL,
         teacher_id INTEGER NOT NULL,
+        password TEXT NOT NULL,
         PRIMARY KEY (id)
     );
 ''')
