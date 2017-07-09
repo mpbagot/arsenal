@@ -148,6 +148,18 @@ class User:
         is_teacher = bool(is_teacher)
         return User(name, password, completed, flagged, current_class, is_teacher, uid, False)
 
+    @staticmethod
+    def getByName(name):
+        cur.execute('''SELECT * FROM users WHERE username = ?''', (name,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        uid, name, password, completed, flagged, current_class, is_teacher = row
+        flagged = [int(a) for a in flagged.split('|') if a]
+        completed = [int(a) for a in completed.split('|') if a]
+        is_teacher = bool(is_teacher)
+        return User(name, password, completed, flagged, current_class, is_teacher, uid, False)
+
 class Class:
     '''
     has an id, teacher_id
@@ -206,7 +218,7 @@ class Class:
     @staticmethod
     def getUniquePassword():
         password = generatePassword()
-        while getByPassword(password):
+        while Class.getByPassword(password):
             password = generatePassword()
         return password
 
