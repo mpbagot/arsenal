@@ -5,12 +5,12 @@
     {%include header.html%}
     <h2>Login{%if required%} Required!{%end if%}</h2>
     <div id="login_form">
-      <form>
+      <form action="/login">
         <input type="text" placeholder="Username">
         <input type="password" placeholder="Password">
         <br>
         <button type="submit" id="otherbuttons">Login</button>
-        <button type="submit" id="otherbuttons">Create Account</button>
+        <button type="button" onclick="window.location.href='/signup';" id="otherbuttons">Create Account</button>
       </form>
     </div>
   </body>
