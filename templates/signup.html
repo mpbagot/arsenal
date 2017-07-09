@@ -4,8 +4,9 @@
     <link rel="stylesheet" href="static/css/login.css">
     {%include header.html%}
     <h2>Create an Account</h2>
+    <h2 style="color:red">{{error}}</h2>
     <div id="login_form">
-      <form action="/signup">
+      <form action="/signup" method="post">
         <input name="name" type="text" placeholder="Username">
         <input name="class_pass" type="text" placeholder="Class Password">
         <input name="pass" type="password" placeholder="Account Password">

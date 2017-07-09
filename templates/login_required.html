@@ -4,10 +4,11 @@
     <link rel="stylesheet" href="static/css/login.css">
     {%include header.html%}
     <h2>Login{%if required%} Required!{%end if%}</h2>
+    <h2 style="color:red">{{error}}</h2>
     <div id="login_form">
-      <form action="/login">
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
+      <form action="/login" method="post">
+        <input name="name" type="text" placeholder="Username">
+        <input name="pass" type="password" placeholder="Password">
         <br>
         <button type="submit" id="otherbuttons">Login</button>
         <button type="button" onclick="window.location.href='/signup';" id="otherbuttons">Create Account</button>
