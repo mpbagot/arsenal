@@ -63,3 +63,12 @@ cur.execute('''
 '''
 )
 conn.commit()
+
+# Create some test data in the database
+from db import *
+user = User('Admin', 'meh', is_teacher=True)
+user.save()
+
+class_meh = Class(1)
+class_meh.save()
+print('Password for teacher class is:', class_meh.password)
