@@ -2,6 +2,7 @@
 from tornado.ncss import Server
 from template_language.parser import render_template
 from parser import SVGParser
+from db import *
 
 def isLoggedIn(function):
     def decorated_function(request):
@@ -95,19 +96,66 @@ def login_handler(request):
     '''
     Handle the login page.
     '''
-    request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':False}))
+    method = request.request.method
+    if method == 'GET':
+        request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':False, 'error':''}))
+    elif method == 'POST':
+        print('form returned')
+        # login the user if everything is good
+        # And return the cookie to be saved back to them
+        username = request.get_field('name')
+        password = request.get_field('pass')
+        test_user = User(username, password)
+        user = User.getByName(username)
+        if user and user.password == test_user.password:
+            request.set_secure_cookie('user_id', str(user.id))
+            request.redirect(r'/')
+        else:
+            error = 'User Not Found!' if not user else 'Password Incorrect!'
+            request.write(render_template('login_required.html', {'title':'Login', 'user':None,
+                                                'required':False, 'error':error}))
 
 def signup_handler(request):
     '''
     Handle the signup of new users
     '''
-    request.write(render_template('signup.html', {'title':'Sign up', 'user':None}))
+    method = request.request.method
+    if method == 'GET':
+        request.write(render_template('signup.html', {'title':'Sign up', 'user':None, 'error':''}))
+    elif method == 'POST':
+        # Add the new user if everything checks out and log them in
+        # then redirect to /
+        password = request.get_field('pass')
+        password_confirm = request.get_field('pass_confirm')
+        username = request.get_field('name')
+        class_password = request.get_field('class_pass')
+        # Grab the user they want to be to check it doesn't already exist
+        test_user = User.getByName(username)
+
+        if not password == password_confirm:
+            # Return passwords do not match error
+            error = 'Passwords do NOT match!'
+        elif not Class.getByPassword(class_password):
+            # Class password invalid error
+            error = 'Class password is invalid!'
+        elif test_user:
+            # User already exists error
+            error = 'A user already exists with that name!'
+        else:
+            users_class = Class.getByPassword(class_password)
+            is_teacher = users_class.id == 1
+            user = User(username, password, current_class=users_class.id, is_teacher=is_teacher)
+            user.save()
+            request.set_secure_cookie('user_id', str(user.id))
+            request.redirect(r'/')
+            return
+        request.write(render_template('signup.html', {'title':'Sign up', 'user':None, 'error':error}))
 
 def not_logged_in_handler(request):
     '''
     Handle the forced login page
     '''
-    request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':True}))
+    request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':True, 'error':''}))
 
 @isLoggedIn
 def http404_handler(request):
