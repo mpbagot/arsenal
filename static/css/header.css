@@ -6,6 +6,15 @@
   from {height:200px;}
   to {height: 0;}
 }
+@keyframes slideUserMenu {
+  from {margin-left: 82%; width: 18%;}
+    to {margin-left: 60%; width: 40%;}
+}
+@keyframes fade {
+  from {opacity: 0;}
+    to {opacity: 1;}
+}
+
 body {
   font-family: sans-serif;
 }
@@ -23,7 +32,7 @@ aside {
   margin-left: 3px;
   visibility: hidden;
 }
-a {
+.links {
   display: block;
   margin: 4px 2px;
   text-decoration: none;
@@ -48,4 +57,46 @@ a {
 .slideOutMenuSide {
   animation: slideSide 0.2s ease-out 0s infinite normal;
   -webkit-animation: slideSide 0.2s ease-out 0s infinite normal;
+}
+table, tr, td {
+  padding: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+  height: 150px;
+  line-height: 0;
+}
+#slide_out {
+  margin-right: 0;
+  margin-left: 82%;
+  width: 18%;
+  height: 145px;
+}
+#slide_tab {
+  height: 150px;
+}
+#right_cell {
+  background-color: #FF7012;
+  width: 90%;
+}
+#right_cell > form {
+  /*visibility: hidden;*/
+  opacity: 0;
+  display:block;
+}
+
+.slideInUserMenu {
+  animation: slideUserMenu 0.4s ease-out 0s infinite normal;
+  -webkit-animation: slideUserMenu 0.4s ease-out 0s infinite normal;
+}
+.slideOutUserMenu {
+  animation: slideUserMenu 0.4s ease-out 0s infinite reverse;
+  -webkit-animation: slideUserMenu 0.4s ease-out 0s infinite reverse;
+}
+.fadeIn {
+  animation: fade 0.2s ease-out 0s infinite normal;
+  -webkit-animation: fade 0.2s ease-out 0s infinite normal;
+}
+.fadeOut {
+  animation: fade 0.2s ease-out 0s infinite reverse;
+  -webkit-animation: fade 0.2s ease-out 0s infinite reverse;
 }

@@ -3,20 +3,33 @@
 </head>
 <body>
   <header>
-    <form action="/login">
-      <img src="<INSERT PEPPER&CARROT CAT AVATER GENERATOR URL HERE>?seed={{user.name}}" id="profile_img">
-      <h3>Welcome, {{user.name}}!</h3>
-      <button id="loginbutton" type="submit">Sign Out</button>
-    </form>
+    <a href="javascript:toggleUserMenu();" style="color: rgba(0,0,0,0);">
+      <div id="slide_out">
+        <table>
+          <tr>
+            <td>
+              <img src="static/img/slide_user_menu.png" id="slide_tab">
+            </td>
+            <td id="right_cell">
+              <form id="user_menu" action="/login">
+                <img src="<INSERT PEPPER&CARROT CAT AVATER GENERATOR URL HERE>?seed={{user.name}}" id="profile_img">
+                <h3 style="color: black">Welcome, {{user.name}}!</h3>
+                <button id="loginbutton" type="submit">Sign Out</button>
+              </form>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </a>
   </header>
-  <a href="javascript:toggleMenu();" style="display: inline;">
+  <a href="javascript:toggleMenu();" style="display: block; color: rgba(0,0,0,0);">
     <img src="static/img/drop_down.png" id="drop_button">
   </a>
   <aside id="drop_menu">
-    <a href="/">Home</a>
-    <a href="/tutorials">Tutorials</a>
-    <a href="/flagged">Flagged</a>
-    <a href="/svgchecker">SVG Checker</a>
+    <a class="links" href="/">Home</a>
+    <a class="links" href="/tutorials">Tutorials</a>
+    <a class="links" href="/flagged">Flagged</a>
+    <a class="links" href="/svgchecker">SVG Checker</a>
   </aside>
   <script src="static/js/header.js">
   </script>

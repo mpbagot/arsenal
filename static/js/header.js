@@ -23,12 +23,52 @@ function toggleMenu() {
         menu.style.height = '0';
         menu.className = 'slideOutMenuUp';
         setTimeout(function() {
-          // menu.style.visibility = 'hidden';
           menu.className = '';
           menu.style.width = '0';
           mustWait = false;
         }, 300);
       }, 200);
+    }
+  }
+}
+var droppedUser = false;
+var mustWaitUser = false;
+function toggleUserMenu() {
+  if (!mustWaitUser) {
+    droppedUser = !droppedUser;
+    mustWaitUser = true;
+    menu = document.getElementById('slide_out');
+    form = document.getElementById('user_menu');
+    if (droppedUser) {
+      menu.className = 'slideInUserMenu';
+      setTimeout(function() {
+        menu.style.marginLeft = '60%';
+        menu.style.width = '40%';
+        menu.className = '';
+        setTimeout(function() {
+          form.style.opacity = '1';
+          form.className = '';
+        }, 100);
+      }, 400);
+      setTimeout(function() {
+        form.className = 'fadeIn';
+      }, 300);
+      mustWaitUser = false;
+    } else {
+      form.className = 'fadeOut';
+      setTimeout(function() {
+        menu.className = 'slideOutUserMenu';
+        setTimeout(function() {
+          menu.style.marginLeft = '82%';
+          menu.style.width = '18%';
+          menu.className = '';
+        }, 400);
+        setTimeout(function() {
+          form.style.opacity = '0';
+          form.className = '';
+        }, 100);
+      }, 100);
+      mustWaitUser = false;
     }
   }
 }
