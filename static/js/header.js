@@ -4,27 +4,27 @@ function toggleMenu() {
   if (!mustWait) {
     dropped = !dropped;
     mustWait = true;
-    menu = document.getElementById('drop_menu');
+    drop_menu = document.getElementById('drop_menu');
     if (dropped) {
-      menu.style.visibility = "visible";
-      menu.className = 'slideInMenuUp';
+      drop_menu.style.visibility = "visible";
+      drop_menu.className = 'slideInMenuUp';
       setTimeout(function() {
-        menu.style.width = '20%';
-        menu.className = 'slideInMenuSide';
+        drop_menu.style.width = '20%';
+        drop_menu.className = 'slideInMenuSide';
         setTimeout(function() {
-          menu.className = '';
-          menu.style.height = '200px';
+          drop_menu.className = '';
+          drop_menu.style.height = '200px';
           mustWait = false;
         }, 200);
       }, 300);
     } else {
-      menu.className = 'slideOutMenuSide';
+      drop_menu.className = 'slideOutMenuSide';
       setTimeout(function() {
-        menu.style.height = '0';
-        menu.className = 'slideOutMenuUp';
+        drop_menu.style.height = '0';
+        drop_menu.className = 'slideOutMenuUp';
         setTimeout(function() {
-          menu.className = '';
-          menu.style.width = '0';
+          drop_menu.className = '';
+          drop_menu.style.width = '0';
           mustWait = false;
         }, 300);
       }, 200);
@@ -39,8 +39,10 @@ function toggleUserMenu() {
     mustWaitUser = true;
     menu = document.getElementById('slide_out');
     form = document.getElementById('user_menu');
+    button = document.getElementById('loginbutton');
     if (droppedUser) {
       menu.className = 'slideInUserMenu';
+      button.style.visibility = 'visible';
       setTimeout(function() {
         menu.style.marginLeft = '60%';
         menu.style.width = '40%';
@@ -62,11 +64,12 @@ function toggleUserMenu() {
           menu.style.marginLeft = '75%';
           menu.style.width = '25%';
           menu.className = '';
+          button.style.visibility = 'hidden';
+          mustWaitUser = false;
         }, 400);
         setTimeout(function() {
           form.style.opacity = '0';
           form.className = '';
-          mustWaitUser = false;
         }, 100);
       }, 100);
     }
