@@ -24,7 +24,7 @@ def build_cat(user_id, seed=''):
 
 	cat = Image.new('RGBA', (1024, 1024))
 	for part in parts_order:
-		filename = 'avatars/{}_{}.png'.format(part, parts[part])
+		filename = 'avatar_generator/avatars/{}_{}.png'.format(part, parts[part])
 		image = Image.open(filename).convert('RGBA')
 		cat = Image.alpha_composite(cat, image)	
-	cat.save('../static/img/user_img/'+str(user_id)+'.png', 'PNG')
+	cat.save('static/img/user_img/'+str(user_id)+'.png', 'PNG')
