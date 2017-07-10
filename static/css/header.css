@@ -7,7 +7,7 @@
   to {height: 0;}
 }
 @keyframes slideUserMenu {
-  from {margin-left: 82%; width: 18%;}
+  from {margin-left: 75%; width: 25%;}
     to {margin-left: 60%; width: 40%;}
 }
 @keyframes fade {
@@ -23,6 +23,7 @@ header {
   height: 150px;
   background-color: gray;
 }
+
 aside {
   width: 20%;
   height: 0;
@@ -31,16 +32,26 @@ aside {
   margin-left: 3px;
   visibility: hidden;
 }
+
+article {
+  position: absolute;
+  top: 160px;
+  left: 21%;
+  width: 78%;
+}
+
 .links {
   display: block;
   margin: 4px 2px;
   text-decoration: none;
   color: white;
 }
+
 #drop_button {
   width: 100%;
   margin-top: 15px;
 }
+
 .slideOutMenuUp {
   animation: slideOut 0.3s ease-out 0s infinite normal;
   -webkit-animation: slideOut 0.3s ease-out 0s infinite normal;
@@ -49,6 +60,7 @@ aside {
   animation: slideOut 0.3s ease-out 0s infinite reverse;
   -webkit-animation: slideOut 0.3s ease-out 0s infinite reverse;
 }
+
 .slideInMenuSide {
   animation: slideSide 0.2s ease-out 0s infinite reverse;
   -webkit-animation: slideSide 0.2s ease-out 0s infinite reverse;
@@ -57,6 +69,7 @@ aside {
   animation: slideSide 0.2s ease-out 0s infinite normal;
   -webkit-animation: slideSide 0.2s ease-out 0s infinite normal;
 }
+
 table, tr, td {
   padding: 0;
   border-spacing: 0;
@@ -64,23 +77,28 @@ table, tr, td {
   height: 150px;
   line-height: 0;
 }
+
 #slide_out {
   margin-right: 0;
-  margin-left: 82%;
-  width: 18%;
+  margin-left: 75%;
+  width: 25%;
   height: 145px;
 }
+
 #slide_tab {
   height: 150px;
 }
+
 #right_cell {
   background-color: #FF7012;
   width: 100%;
 }
+
 #right_cell > form {
   opacity: 0;
   display:block;
 }
+
 .slideInUserMenu {
   animation: slideUserMenu 0.4s ease-out 0s infinite normal;
   -webkit-animation: slideUserMenu 0.4s ease-out 0s infinite normal;
@@ -89,6 +107,7 @@ table, tr, td {
   animation: slideUserMenu 0.4s ease-out 0s infinite reverse;
   -webkit-animation: slideUserMenu 0.4s ease-out 0s infinite reverse;
 }
+
 .fadeIn {
   animation: fade 0.2s ease-out 0s infinite normal;
   -webkit-animation: fade 0.2s ease-out 0s infinite normal;
