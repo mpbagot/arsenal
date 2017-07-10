@@ -78,11 +78,9 @@ table, tr, td {
   width: 90%;
 }
 #right_cell > form {
-  /*visibility: hidden;*/
   opacity: 0;
   display:block;
 }
-
 .slideInUserMenu {
   animation: slideUserMenu 0.4s ease-out 0s infinite normal;
   -webkit-animation: slideUserMenu 0.4s ease-out 0s infinite normal;
