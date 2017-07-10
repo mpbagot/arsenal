@@ -48,12 +48,12 @@ function toggleUserMenu() {
         setTimeout(function() {
           form.style.opacity = '1';
           form.className = '';
+          mustWaitUser = false;
         }, 100);
       }, 400);
       setTimeout(function() {
         form.className = 'fadeIn';
       }, 300);
-      mustWaitUser = false;
     } else {
       form.className = 'fadeOut';
       setTimeout(function() {
@@ -66,9 +66,9 @@ function toggleUserMenu() {
         setTimeout(function() {
           form.style.opacity = '0';
           form.className = '';
+          mustWaitUser = false;
         }, 100);
       }, 100);
-      mustWaitUser = false;
     }
   }
 }
@@ -79,4 +79,5 @@ function adjustDropMenu(event) {
   document.getElementById('drop_menu').style.paddingTop = (height+10)+'px';
 }
 window.onresize = adjustDropMenu;
-adjustDropMenu(null);
+setTimeout(adjustDropMenu, 1000);
+// adjustDropMenu(null);
