@@ -38,7 +38,7 @@ aside {
   color: white;
 }
 #drop_button {
-  width: 20%;
+  width: 100%;
   margin-top: 15px;
 }
 .slideOutMenuUp {
@@ -75,7 +75,7 @@ table, tr, td {
 }
 #right_cell {
   background-color: #FF7012;
-  width: 90%;
+  width: 100%;
 }
 #right_cell > form {
   opacity: 0;
