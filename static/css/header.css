@@ -38,6 +38,8 @@ article {
   top: 160px;
   left: 21%;
   width: 78%;
+  border: 5px solid lightgray;
+  border-radius: 10px;
 }
 
 .links {
@@ -92,8 +94,6 @@ table, tr, td {
 #right_cell {
   background-color: #FF7012;
   width: 100%;
-  border: 2px solid #FF7012;
-  border-bottom: 0px solid black;
 }
 
 #right_cell > form {
