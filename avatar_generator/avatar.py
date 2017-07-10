@@ -22,7 +22,7 @@ def build_cat(user_id, seed=''):
 
 	random.seed()
 
-	cat = Image.new('RGBA', (70, 70))
+	cat = Image.new('RGBA', (1024, 1024))
 	for part in parts_order:
 		filename = 'avatars/{}_{}.png'.format(part, parts[part])
 		image = Image.open(filename).convert('RGBA')
