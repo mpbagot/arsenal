@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 from tornado.ncss import Server
 from template_language.parser import render_template
+from avatar_generator.avatar import build_cat
 from svg_parser import SVGParser
 from db import *
 
@@ -146,6 +147,9 @@ def signup_handler(request):
             is_teacher = (users_class.id == 1)
             user = User(username, password, current_class=users_class.id, is_teacher=is_teacher)
             user.save()
+            # Build a cat avatar
+            build_cat(user.id, ''.join(user.name.split()))
+            # Set the cookie to log in
             request.set_secure_cookie('user_id', str(user.id))
             request.redirect(r'/')
             return
