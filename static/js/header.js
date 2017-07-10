@@ -59,8 +59,8 @@ function toggleUserMenu() {
       setTimeout(function() {
         menu.className = 'slideOutUserMenu';
         setTimeout(function() {
-          menu.style.marginLeft = '82%';
-          menu.style.width = '18%';
+          menu.style.marginLeft = '75%';
+          menu.style.width = '25%';
           menu.className = '';
         }, 400);
         setTimeout(function() {
