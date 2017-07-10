@@ -143,7 +143,7 @@ def signup_handler(request):
             error = 'A user already exists with that name!'
         else:
             users_class = Class.getByPassword(class_password)
-            is_teacher = users_class.id == 1
+            is_teacher = (users_class.id == 1)
             user = User(username, password, current_class=users_class.id, is_teacher=is_teacher)
             user.save()
             request.set_secure_cookie('user_id', str(user.id))
@@ -156,6 +156,13 @@ def not_logged_in_handler(request):
     Handle the forced login page
     '''
     request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':True, 'error':''}))
+
+def signout_handler(request):
+    '''
+    Handle the signout process
+    '''
+    request.clear_cookie('user_id')
+    request.redirect('/')
 
 @isLoggedIn
 def http404_handler(request):
@@ -177,6 +184,7 @@ server.register(r'/tutorial/([0-9]+)', tutorial_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)
+server.register(r'/signout', signout_handler)
 server.register(r'/.+', http404_handler)
 
 # Run the server
