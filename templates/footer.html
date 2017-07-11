@@ -1,9 +1,15 @@
+<link rel="stylesheet" href="static/css/footer.css">
 <footer id="footer">
-  <link rel="stylesheet" href="static/css/footer.css">
-
+  <img style="display: inline;" src="static/img/footer_left.png">
+  <span id="footer_info">
+    Some random footer text that will be replaced once it is required.
+  </span>
+  <img style="display: inline;" align="right" src="static/img/footer_right.png">
 </footer>
 <script>
   footer = document.getElementById('footer');
   article = document.getElementById('main_article');
   footer.style.top = (article.offsetHeight+170)+'px';
+  span = document.getElementById('footer_info');
+  span.style.width = (footer.offsetWidth*0.9-460)+'px';
 </script>

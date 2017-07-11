@@ -1,6 +1,15 @@
 footer {
   position: absolute;
   height: 150px;
-  background-color: orange;
-  width: 100%;
+  background-color: gray;
+  width: 99%;
+}
+
+#footer_info {
+  display: inline-block;
+  margin: 0 5%;
+  margin-top: 20px;
+  vertical-align: top;
+  height: 110px;
+  text-align: center;
 }
