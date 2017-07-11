@@ -124,7 +124,7 @@ class User:
         # Generate the condition statement for the SQL
         condition = " && ".join(["id != {}".format(int(i)) for i in self.completed])
         # Pull the tutorials from the database
-        cur.execute('''SELECT id, image FROM tutorials WHERE {}'''.format(condition))
+        cur.execute('''SELECT id, image FROM tutorials WHERE ?''', (condition,))
         rows = cur.fetchall()
         tutorials = []
         for row in rows:

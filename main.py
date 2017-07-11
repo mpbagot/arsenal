@@ -26,7 +26,7 @@ def index_handler(request):
     '''
     user = get_login_user(request)
     html = render_template('index.html', { 'title':'Index Page', 'user' : user,
-                                        "tutorials" : []
+                                        "tutorials" : user.getSuggestedTutorials()
                                         })
     request.write(html)
 
