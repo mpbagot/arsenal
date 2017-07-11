@@ -82,5 +82,5 @@ function adjustDropMenu(event) {
   document.getElementById('drop_menu').style.paddingTop = (height+10)+'px';
 }
 window.onresize = adjustDropMenu;
-setTimeout(adjustDropMenu, 1000);
+setTimeout(adjustDropMenu, 500);
 // adjustDropMenu(null);
