@@ -3,7 +3,7 @@
 {%include header.html%}
 {%for i in range(len(units))%}
   <h2>Unit {{i}}: {{units[i].title}}</h2>
-  <article>
+  <article id="main_article">
     {%for tutorial in units[i].tutorials%}
       <!-- Create a tutorial rectangle thing here with the tutorial details. -->
     {%end for%}
