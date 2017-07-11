@@ -33,7 +33,7 @@ aside {
   visibility: hidden;
 }
 
-article {
+#main_article {
   position: absolute;
   top: 160px;
   left: 21%;
