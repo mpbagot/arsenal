@@ -9,7 +9,13 @@
 <script>
   footer = document.getElementById('footer');
   article = document.getElementById('main_article');
-  footer.style.top = (article.offsetHeight+170)+'px';
+  x = (document.getElementById('drop_menu').offsetHeight + 230)
+  y = (article.offsetHeight)
+  if (x > y) {
+    footer.style.top = (x+170)+'px';
+  } else {
+    footer.style.top = (y+170)+'px';
+  }
   span = document.getElementById('footer_info');
-  span.style.width = (footer.offsetWidth*0.9-460)+'px';
+  span.style.width = (footer.offsetWidth*0.9-480)+'px';
 </script>
