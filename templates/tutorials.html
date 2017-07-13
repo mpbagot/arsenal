@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <head>
 {%include header.html%}
-{%for i in range(len(units))%}
-  <h2>Unit {{i}}: {{units[i].title}}</h2>
-  <article id="main_article">
-    {%for tutorial in units[i].tutorials%}
-      <!-- Create a tutorial rectangle thing here with the tutorial details. -->
-    {%end for%}
-  </article>
-{%end for%}
+<article id="main_article">
+  <h2>Tutorials</h2>
+  {%for i in range(len(units))%}
+    <h2>Unit {{i}}: {{units[i].title}}</h2>
+      {%for tutorial in units[i].tutorials%}
+        <!-- Create a tutorial rectangle thing here with the tutorial details. -->
+      {%end for%}
+  {%end for%}
+</article>
 {%include footer.html%}
 </body>
 </html>
