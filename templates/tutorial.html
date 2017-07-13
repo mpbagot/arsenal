@@ -19,13 +19,13 @@
   {%end if%}
   {%for paragraph in tutorial.text%}
     {%if paragraph.startswith('img')%}
-      <img src="static/img/tutorial/{{tutorial.id}}/{{paragraph.split()[1]}}">
+      <img src="/static/img/tutorial/{{tutorial.id}}/{{paragraph.split()[1]}}">
     {%end if%}
     {%if not paragraph.startswith('img')%}
       <p>{{paragraph}}</p>
     {%end if%}
   {%end for%}
-  <a href="static/misc/tutorial_{{tutorial.id}}.zip"></a>
+  <a href="/static/misc/tutorial_{{tutorial.id}}.zip"></a>
 </article>
 {%include footer.html%}
 </body>

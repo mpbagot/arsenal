@@ -1,5 +1,5 @@
   <title>{{title}}</title>
-  <link rel="stylesheet" href="static/css/header.css">
+  <link rel="stylesheet" href="/static/css/header.css">
 </head>
 <body>
   <header>
@@ -8,14 +8,14 @@
         <table>
           <tr>
             <td>
-              <img src="static/img/slide_user_menu.png" id="slide_tab">
+              <img src="/static/img/slide_user_menu.png" id="slide_tab">
             </td>
             <td id="right_cell">
               <form id="user_menu" action="/signout" method="post">
                 <table>
                   <tr>
                     <td>
-                      <img src="static/img/user_img/{{user.id}}.png" id="profile_img" height="130px" style="border: 2px solid black;border-radius: 5px;margin-left: 20px;">
+                      <img src="/static/img/user_img/{{user.id}}.png" id="profile_img" height="130px" style="border: 2px solid black;border-radius: 5px;margin-left: 20px;">
                     </td>
                     <td style="padding-left: 20px;">
                       <h3 style="color: black;line-height: 1;">Welcome, {{user.name}}!</h3>
@@ -31,7 +31,7 @@
     </a>
   </header>
   <a href="javascript:toggleMenu();" style="display: block; color: rgba(0,0,0,0);width: 20%;">
-    <img src="static/img/drop_down.png" id="drop_button">
+    <img src="/static/img/drop_down.png" id="drop_button">
   </a>
   <aside id="drop_menu">
     <a class="links" href="/">Home</a>
@@ -39,5 +39,5 @@
     <a class="links" href="/flagged">Flagged</a>
     <a class="links" href="/svgchecker">SVG Checker</a>
   </aside>
-  <script src="static/js/header.js">
+  <script src="/static/js/header.js">
   </script>

@@ -5,7 +5,7 @@
   <h1 id="title">Flagged Tutorials</h1>
   {%for i in range(len(flag_tutors))%}
     <div id="flag_{{i}}" class="flagged_tutorial">
-      <img src="static/img/tutor_img/{{flag_tutor.id}}.png">
+      <img src="/static/img/tutor_img/{{flag_tutor.id}}.png">
       <h3>{{flag_tutors[i].title}}</h3>
       <p>{{flag_tutors[i].description}}</p>
       <a href="unflag({{i}})">Unflag</a>
