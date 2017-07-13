@@ -1,3 +1,26 @@
 .student_detail {
-  border: 1px solid lightgray;
+  border: 2px solid lightgray;
+  margin: 5px;
+}
+.student_avatar {
+  border: 2px solid black;
+  border-radius: 5px;
+  display: inline;
+  margin: 5px;
+}
+.detail {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  margin-left: 3%;
+  margin-right: 6%;
+}
+.detail_redirect {
+  vertical-align: top;
+  margin-top: 50px;
+  background-color: #FF8032;
+  border: none;
+  height: 40px;
+  width: auto;
+  color: white;
 }

@@ -5,10 +5,12 @@
   <article id="main_article">
     {%for student in students%}
       <div class="student_detail">
-        <img src="/static/img/user_img/{{student.id}}.png">
-        <h4>{{student.name}}</h4>
-        <h5>{{len(student.completed)}}/{{100}}</h5>
-        <button type="button" onclick="window.location.href='/student/{{student.id}}/';">View Student Details</button>
+        <img class="student_avatar" width="120px" height="120px" src="/static/img/user_img/{{student.id}}.png">
+        <span class="detail">
+          <h3>{{student.name}}</h3>
+          <h4>{{len(student.completed)}}/100 Tutorials Completed</h4>
+        </span>
+        <button class="detail_redirect" type="button" onclick="window.location.href='/student/{{student.id}}/';">View Student Details</button>
       </div>
     {% end for %}
   </article>
