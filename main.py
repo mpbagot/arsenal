@@ -6,13 +6,43 @@ from svg_parser import SVGParser
 from db import *
 
 def isLoggedIn(function):
+    '''
+    A decorator for handlers to determine if the client is logged in to an account
+    '''
+    def decorated_function(request):
+        # Get the user id cookie
+        user_id = request.get_secure_cookie('user_id')
+        # If the user id cookie has been set and is a valid user id
+        if user_id and User.get(int(user_id)):
+            # Return the normal handler
+            return function(request)
+        # Otherwise redirect to the login page
+        global not_logged_in_handler
+        return not_logged_in_handler(request)
+    return decorated_function
+
+def isTeacherLoggedIn(function):
+    '''
+    A decorator for handlers to determine if the client is logged in as a Teacher
+    '''
     def decorated_function(request):
         user_id = request.get_secure_cookie('user_id')
-        if user_id and User.get(int(user_id)):
+        if user_id and User.get(int(user_id)) and User.get(int(user_id)).is_teacher:
             return function(request)
-        global not_logged_in_handler
-        print('redirecting to login')
-        return not_logged_in_handler(request)
+        global http404_handler
+        return http404_handler(request)
+    return decorated_function
+
+def isAdminLoggedIn(function):
+    '''
+    A decorator for handlers to determine if the client is logged in as an Admin
+    '''
+    def decorated_function(request):
+        user_id = request.get_secure_cookie('user_id')
+        if user_id and int(user_id) == 0:
+            return function(request)
+        global http404_handler
+        return http404_handler(request)
     return decorated_function
 
 def get_login_user(request):
@@ -91,7 +121,7 @@ def upload_handler(request):
         parser = SVGParser(fileData)
         parser.evaluate()
         request.write(render_template('result.html', {'title': 'SVG Scan Results', 'user' : user,
-                                      'result' : parser.result, 'image' : 'static/img/tmp_upload/'+fileName}))
+                                      'result' : parser.result, 'image' : '/static/img/tmp_upload/'+fileName}))
 
 def login_handler(request):
     '''
@@ -168,6 +198,26 @@ def signout_handler(request):
     request.clear_cookie('user_id')
     request.redirect('/')
 
+@isTeacherLoggedIn
+def user_detail_handler(request, user_id=1):
+    '''
+    Handle the student details/progress page
+    '''
+    student = User.get(int(user_id))
+    user = get_login_user(request)
+    request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
+                                                        'student':student}))
+
+@isTeacherLoggedIn
+def class_detail_handler(request, class_id=1):
+    '''
+    Handle the class student list page
+    '''
+    current_class = Class.get(int(class_id))
+    user = get_login_user(request)
+    request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
+                                                    'students':current_class.getStudents()}))
+
 @isLoggedIn
 def http404_handler(request):
     '''
@@ -185,6 +235,8 @@ server.register(r'/tutorials', tutorials_handler)
 server.register(r'/flagged', flagged_handler)
 server.register(r'/svgchecker', checker_handler)
 server.register(r'/tutorial/([0-9]+)', tutorial_handler)
+server.register(r'/student/([0-9]+)', user_detail_handler)
+server.register(r'/class/([0-9]+)', class_detail_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)
