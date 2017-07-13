@@ -9,13 +9,13 @@ def isLoggedIn(function):
     '''
     A decorator for handlers to determine if the client is logged in to an account
     '''
-    def decorated_function(request):
+    def decorated_function(request, *args):
         # Get the user id cookie
         user_id = request.get_secure_cookie('user_id')
         # If the user id cookie has been set and is a valid user id
         if user_id and User.get(int(user_id)):
             # Return the normal handler
-            return function(request)
+            return function(request, *args)
         # Otherwise redirect to the login page
         global not_logged_in_handler
         return not_logged_in_handler(request)
@@ -25,10 +25,10 @@ def isTeacherLoggedIn(function):
     '''
     A decorator for handlers to determine if the client is logged in as a Teacher
     '''
-    def decorated_function(request):
+    def decorated_function(request, *args):
         user_id = request.get_secure_cookie('user_id')
         if user_id and User.get(int(user_id)) and User.get(int(user_id)).is_teacher:
-            return function(request)
+            return function(request, *args)
         global http404_handler
         return http404_handler(request)
     return decorated_function
@@ -37,10 +37,10 @@ def isAdminLoggedIn(function):
     '''
     A decorator for handlers to determine if the client is logged in as an Admin
     '''
-    def decorated_function(request):
+    def decorated_function(request, *args):
         user_id = request.get_secure_cookie('user_id')
         if user_id and int(user_id) == 0:
-            return function(request)
+            return function(request, *args)
         global http404_handler
         return http404_handler(request)
     return decorated_function
@@ -215,6 +215,7 @@ def class_detail_handler(request, class_id=1):
     '''
     current_class = Class.get(int(class_id))
     user = get_login_user(request)
+    print('Retrieving students')
     request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
                                                     'students':current_class.getStudents()}))
 
