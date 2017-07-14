@@ -29,8 +29,8 @@ def isTeacherLoggedIn(function):
         user_id = request.get_secure_cookie('user_id')
         if user_id and User.get(int(user_id)) and User.get(int(user_id)).is_teacher:
             return function(request, *args)
-        global http404_handler
-        return http404_handler(request)
+        global insufficient_user_handler
+        return insufficient_user_handler(request)
     return decorated_function
 
 def isAdminLoggedIn(function):
@@ -41,8 +41,8 @@ def isAdminLoggedIn(function):
         user_id = request.get_secure_cookie('user_id')
         if user_id and int(user_id) == 0:
             return function(request, *args)
-        global http404_handler
-        return http404_handler(request)
+        global insufficient_user_handler
+        return insufficient_user_handler(request)
     return decorated_function
 
 def get_login_user(request):
@@ -205,8 +205,11 @@ def user_detail_handler(request, user_id=1):
     '''
     student = User.get(int(user_id))
     user = get_login_user(request)
-    request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
-                                                        'student':student}))
+    if Class.get(student.current_class).teacher_id == user.id or user.id == 1:
+        request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
+                                                            'student':student}))
+    else:
+        insufficient_user_handler(request)
 
 @isTeacherLoggedIn
 def class_detail_handler(request, class_id=1):
@@ -215,9 +218,12 @@ def class_detail_handler(request, class_id=1):
     '''
     current_class = Class.get(int(class_id))
     user = get_login_user(request)
-    print('Retrieving students')
-    request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
-                                                    'students':current_class.getStudents()}))
+    print(user)
+    if current_class.teacher_id == user.id or user.id == 1:
+        request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
+                                                        'students':current_class.getStudents()}))
+    else:
+        insufficient_user_handler(request)
 
 @isLoggedIn
 def http404_handler(request):
@@ -227,6 +233,14 @@ def http404_handler(request):
     user = get_login_user(request)
     html = render_template('404.html', {'title':'Error 404', 'user' : user})
     request.write(html)
+
+@isLoggedIn
+def insufficient_user_handler(request):
+    '''
+    Handle an insufficient user privileges page
+    '''
+    user = get_login_user(request)
+    request.write(render_template('user_priv_error.html', {'title':'Invalid User Access', 'user':user,}))
 
 # Initialise the server
 server = Server(hostname='0.0.0.0', port=80)
