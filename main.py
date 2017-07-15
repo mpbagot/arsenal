@@ -131,7 +131,6 @@ def login_handler(request):
     if method == 'GET':
         request.write(render_template('login_required.html', {'title':'Login', 'user':None, 'required':False, 'error':''}))
     elif method == 'POST':
-        print('form returned')
         # login the user if everything is good
         # And return the cookie to be saved back to them
         username = request.get_field('name')
@@ -207,7 +206,8 @@ def user_detail_handler(request, user_id=1):
     user = get_login_user(request)
     if Class.get(student.current_class).teacher_id == user.id or user.id == 1:
         request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
-                                                            'student':student}))
+                                                            'student':student, 'completed':[],
+                                                            'flagged':[]}))
     else:
         insufficient_user_handler(request)
 
@@ -218,7 +218,6 @@ def class_detail_handler(request, class_id=1):
     '''
     current_class = Class.get(int(class_id))
     user = get_login_user(request)
-    print(user)
     if current_class.teacher_id == user.id or user.id == 1:
         request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
                                                         'students':current_class.getStudents()}))

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <link href="/static/css/student_detail.css" rel="stylesheet">
+  {%include header.html%}
+  <article id="main_article">
+    <img class="student_avatar" width="200px" height="200px" src="/static/img/user_img/{{student.id}}.png">
+    <span class="detail">
+      <h2>Student Username: {{student.name}}</h2>
+      <h3>{{len(student.completed)}}/100 Tutorials Completed</h3>
+      <canvas id="progress_bar" width="400" height="50"></canvas>
+    </span>
+
+    <script>var text = 'Tutorials Completed: '+{{len(student.completed)}}+'/'+100;
+    var per = {{len(student.completed)}}/100;</script>
+    <script src="/static/js/student_detail.js"></script>
+
+    <h3 class="subheading">Student's Flagged Tutorials</h3>
+    {%for tutorial in flagged%}
+
+    {%end for%}
+    <h3 class="subheading">Student's Completed Tutorials</h3>
+    {%for tutorial in completed%}
+
+    {%end for%}
+  </article>
+  {%include footer.html%}
+</body>
+</html>
