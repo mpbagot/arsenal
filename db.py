@@ -213,7 +213,7 @@ class Class:
         self.teacher_id = teacher_id
 
     def __str__(self):
-        return 'Class(teacher_id={}, password={}, id={})'.format(self.teacher_id, self.id)
+        return 'Class(teacher_id={}, password={}, id={})'.format(self.teacher_id, self.password, self.id)
 
     def save(self):
         if self.id is None:
@@ -364,16 +364,6 @@ def generatePassword():
 
 if __name__ == "__main__":
     #do testing here
-    admin = User('Admin', 'meh', is_teacher=True)
-    admin.save()
-    print(admin)
-    admin2 = User.get(1)
-    print(admin2)
-    c = Class(1)
-    c.save()
-    print(c)
-    c2 = Class.get(1)
-    print(c2)
     u = Unit('Title')
     u.save()
     print(u)
@@ -395,3 +385,6 @@ if __name__ == "__main__":
     r3.save()
     print(Tutorial.get(1).getResources())
     print(Tutorial.get(2).getResources())
+    admin = User('Mitchell', 'meh', is_teacher=True, current_class=1)
+    admin.save()
+    print(admin)
