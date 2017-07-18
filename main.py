@@ -204,10 +204,13 @@ def user_detail_handler(request, user_id=1):
     '''
     student = User.get(int(user_id))
     user = get_login_user(request)
+    teacher = User.get(Class.get(student.current_class).teacher_id)
+    tutorials = student.getTutorials()
     if Class.get(student.current_class).teacher_id == user.id or user.id == 1:
         request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
-                                                            'student':student, 'completed':[],
-                                                            'flagged':[]}))
+                                                            'student':student, 'teacher':teacher,
+                                                            'incomplete':tutorials[1], 'com_flag':tutorials[0],
+                                                            }))
     else:
         insufficient_user_handler(request)
 
