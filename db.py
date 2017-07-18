@@ -15,6 +15,7 @@ class Tutorial:
     '''
     def __init__(self, unitid, text, image, is_image=True, id=None):
         self.text = eval(text)
+        self.title = self.text[0]
         self.unit_id = unitid
         self.image = image
         self.is_image = is_image
@@ -165,19 +166,31 @@ class User:
         for row in rows:
             uid, image = row
             tutorials.append(Tutorial.get(uid))
+        # Get the array of unique tutorials
+        com_flag = []
+        for t in flagged+completed:
+            g = True
+            for a in flagged:
+                if t.id == a.id:
+                    g = False
+            for a in completed:
+                if t.id == a.id:
+                    g = False
+            if g:
+                com_flag.append(t)
         # Get all of the incompleted and unflagged tutorials
         tutorials_not_special = []
         for t in tutorials:
             g = True
             # Check if the tutorial is completed or flagged
-            for a in completed+flagged:
+            for a in com_flag:
                 if a.id == t.id:
                     g = False
                     break
             # If it's not, append it to the new array
             if g:
                 tutorials_not_special.append(t)
-        return (flagged, completed+tutorials_not_special)
+        return (com_flag, tutorials_not_special)
 
     @staticmethod
     def get(id):
