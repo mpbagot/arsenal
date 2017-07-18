@@ -136,6 +136,49 @@ class User:
         # Return the tutorial list.
         return tutorials
 
+    def getCompletedTutorials(self):
+        '''
+        Get an array of Tutorial Objects corresponding to the completed tutorials of the user.
+        '''
+        # Generate the condition statement for the SQL
+        condition = " && ".join(["id = {}".format(int(i)) for i in self.completed])
+        # Pull the tutorials from the database
+        cur.execute('''SELECT id, image FROM tutorials WHERE ?''', (condition,))
+        rows = cur.fetchall()
+        tutorials = []
+        for row in rows:
+            uid, image = row
+            tutorials.append(Tutorial.get(uid))
+        # Return the tutorial list.
+        return tutorials
+
+    def getTutorials(self):
+        '''
+        Get the Tutorial objects for the student details page
+        '''
+        flagged = self.getFlaggedTutorials()
+        completed = self.getCompletedTutorials()
+        cur.execute('''SELECT id, image from tutorials''')
+        rows = cur.fetchall()
+        # Get all of the tutorials into an array
+        tutorials = []
+        for row in rows:
+            uid, image = row
+            tutorials.append(Tutorial.get(uid))
+        # Get all of the incompleted and unflagged tutorials
+        tutorials_not_special = []
+        for t in tutorials:
+            g = True
+            # Check if the tutorial is completed or flagged
+            for a in completed+flagged:
+                if a.id == t.id:
+                    g = False
+                    break
+            # If it's not, append it to the new array
+            if g:
+                tutorials_not_special.append(t)
+        return (flagged, completed+tutorials_not_special)
+
     @staticmethod
     def get(id):
         cur.execute('''SELECT * FROM users WHERE id = ?''', (id,))
