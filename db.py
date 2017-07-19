@@ -60,6 +60,15 @@ class Tutorial:
         id, unitid, text, image, is_image = row
         return Tutorial(unitid, text, image, bool(is_image), id)
 
+    @staticmethod
+    def getAll():
+        cur.execute('''SELECT * FROM tutorials''')
+        rows = cur.fetchall()
+        tutorials = []
+        for row in rows:
+            uid, *meh = row
+            tutorials.append(Tutorial.get(uid))
+        return tutorials
 
 class User:
     '''
@@ -211,10 +220,21 @@ class User:
         if row is None:
             return None
         uid, name, password, completed, flagged, current_class, is_teacher = row
-        flagged = [int(a) for a in flagged.split('|') if a]
-        completed = [int(a) for a in completed.split('|') if a]
+        flagged = [a for a in flagged.split('|') if a]
+        completed = [a for a in completed.split('|') if a]
         is_teacher = bool(is_teacher)
         return User(name, password, completed, flagged, current_class, is_teacher, uid, False)
+
+    @staticmethod
+    def getAll():
+        cur.execute('''SELECT * FROM users''')
+        rows = cur.fetchall()
+        users = []
+        for row in rows:
+            uid, *meh = row
+            if uid != 1:
+                users.append(User.get(uid))
+        return users
 
 class Class:
     '''
