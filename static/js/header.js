@@ -1,4 +1,4 @@
-var dropped = false;
+var dropped = true;
 var mustWait = false;
 function toggleMenu() {
   if (!mustWait) {
@@ -83,4 +83,4 @@ function adjustDropMenu(event) {
 }
 window.onresize = adjustDropMenu;
 setTimeout(adjustDropMenu, 500);
-// adjustDropMenu(null);
+adjustDropMenu(null);

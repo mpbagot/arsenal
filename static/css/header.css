@@ -26,11 +26,11 @@ header {
 
 aside {
   width: 20%;
-  height: 0;
+  height: 200px;
   background-color: gray;
   padding-top: 110px;
-  margin-left: 3px;
-  visibility: hidden;
+  margin-left: 0;
+  /*visibility: hidden;*/
 }
 
 #main_article {
