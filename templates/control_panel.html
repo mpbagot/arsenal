@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+  <link href="/static/css/control_panel.css" rel="stylesheet">
+  {%include header.html%}
+  <article id="main_article">
+    <span>
+      <h3 class="subheading">Students</h3>
+      {%for student in students%}
+        <div class="student_detail" id="user_{{student.id}}" >
+          <button onclick="deleteUser({{student.id}});" class="delete_button">X</button>
+          <h3>{{student.name}}</h3>
+          <button class="detail_redirect" type="button" onclick="window.location.href='/student/{{student.id}}';">View Student Details</button>
+        </div>
+      {%end for%}
+    </span>
+    <span>
+      <h3 class="subheading">Tutorials</h3>
+      {%for tutorial in tutorials%}
+        <div class="tutorial_detail" id="tut_{{tutorial.id}}" >
+          <button onclick="deleteTutorial({{tutorial.id}});" class="delete_button">X</button>
+          <h3>{{tutorial.title}}</h3>
+          <button class="detail_redirect" type="button" onclick="window.location.href='/tutorial/{{tutorial.id}}';">View Tutorial</button>
+        </div>
+      {%end for%}
+    </span>
+  </article>
+  {%include footer.html%}
+  <script>
+    function deleteUser(user_id) {
+      if (confirm("Are you certain you wish to delete this user?\nThis cannot be undone!") == true) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/admin/panel', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+          if (xhr.status == 200) {
+            var elem = document.getElementById('user_'+user_id);
+            elem.parentNode.removeChild(elem);
+          }
+        }
+        xhr.send('userid='+user_id);
+      }
+    }
+    function deleteTutorial(tut_id) {
+      if (confirm("Are you certain you wish to delete this tutorial?\nThis cannot be undone!") == true) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/admin/panel', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+          if (xhr.status == 200) {
+            var elem = document.getElementById('tut_'+tut_id);
+            elem.parentNode.removeChild(elem);
+          }
+        }
+        xhr.send('tutid='+tut_id);
+      }
+    }
+  </script>
+</body>
+</html>
