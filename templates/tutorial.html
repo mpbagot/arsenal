@@ -6,24 +6,13 @@
     <!-- Tutorial flagging button -->
   </form>
   <h4>External Resources</h4>
-  {%for resource in tutorial.external%}
+  {%for resource in external%}
     <a href="{{resource.link}}"> - {{resource.title}}</a>
   {%end for%}
 </aside>
 <article id="main_article">
-  {%if tutorial.isImage%}
-    <img src="{{tutorial.mainMedia}}" id="main_media">
-  {%end if%}
-  {%if not tutorial.isImage%}
-    <video src="{{tutorial.mainMedia}}" controls id="main_media">
-  {%end if%}
   {%for paragraph in tutorial.text%}
-    {%if paragraph.startswith('img')%}
-      <img src="/static/img/tutorial/{{tutorial.id}}/{{paragraph.split()[1]}}">
-    {%end if%}
-    {%if not paragraph.startswith('img')%}
-      <p>{{paragraph}}</p>
-    {%end if%}
+    {{paragraph}}
   {%end for%}
   <a href="/static/misc/tutorial_{{tutorial.id}}.zip"></a>
 </article>
