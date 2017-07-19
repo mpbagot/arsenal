@@ -199,8 +199,8 @@ class User:
         if row is None:
             return None
         uid, name, password, completed, flagged, current_class, is_teacher = row
-        flagged = [int(a) for a in flagged.split('|') if a]
-        completed = [int(a) for a in completed.split('|') if a]
+        flagged = [a for a in flagged.split('|') if a]
+        completed = [a for a in completed.split('|') if a]
         is_teacher = bool(is_teacher)
         return User(name, password, completed, flagged, current_class, is_teacher, uid, False)
 
