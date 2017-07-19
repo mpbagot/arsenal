@@ -6,21 +6,29 @@
     <img class="student_avatar" width="200px" height="200px" src="/static/img/user_img/{{student.id}}.png">
     <span class="detail">
       <h2>Student Username: {{student.name}}</h2>
-      <h3>{{len(student.completed)}}/100 Tutorials Completed</h3>
-      <canvas id="progress_bar" width="400" height="50"></canvas>
+      {%if not student.is_teacher%}
+        <h3>Class Teacher: {{teacher.name}}</h3>
+      {%end if%}
+      <canvas id="progress_bar" width="400" height="50">
+        <h3 id="progress_heading">{{len(student.completed)}}/100 Tutorials Completed</h3>
+      </canvas>
     </span>
 
-    <script>var text = 'Tutorials Completed: '+{{len(student.completed)}}+'/'+100;
-    var per = {{len(student.completed)}}/100;</script>
+    <script>
+    var completed = {{len(student.completed)}};
+    </script>
     <script src="/static/js/student_detail.js"></script>
-
-    <h3 class="subheading">Student's Flagged Tutorials</h3>
-    {%for tutorial in flagged%}
-
-    {%end for%}
-    <h3 class="subheading">Student's Completed Tutorials</h3>
-    {%for tutorial in completed%}
-
+    <h2 class="subheading">Tutorials</h2>
+    {%for tutorial in com_flag+incomplete%}
+      <div id="tutorial_{{tutorial.id}}" class="{%if str(tutorial.id) in student.completed%}complete{%end if%}{%if str(tutorial.id) in student.flagged%} flagged{%end if%} tutorial">
+        <button class="complete_button" onclick="toggleComplete({{tutorial.id}}, {{student.id}});" type="button" style="width: 80px;">
+          <strong>Complete</strong>
+        </button>
+        <button class="flag_button" onclick="toggleFlag({{tutorial.id}}, {{student.id}});" type="button">
+          <img src="/static/img/flag.png" width="30px" height="30px" class="flag">
+        </button>
+        <h2>{{tutorial.title}}</h2>
+      </div>
     {%end for%}
   </article>
   {%include footer.html%}

@@ -25,6 +25,37 @@
   width: auto;
   color: white;
 }
+.tutorial {
+  border: 2px solid gray;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  height: 80px;
+}
+.tutorial > .flag_button > .flag {
+  opacity: 0;
+}
+.flagged > .flag_button > .flag {
+  opacity: 1;
+}
+.complete > .complete_button {
+  background-color: #FF8032;
+  color: white;
+}
+.flag, .tutorial > h2 {
+  display: inline-block;
+  outline: none;
+}
+.tutorial > button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  outline: none;
+}
 .subheading {
   margin-left: 15px;
 }
