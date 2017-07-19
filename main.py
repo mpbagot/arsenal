@@ -215,6 +215,28 @@ def user_detail_handler(request, user_id=1):
         insufficient_user_handler(request)
 
 @isTeacherLoggedIn
+def update_tutorial_handler(request, update_type):
+    '''
+    Update the details of tutorials for a student
+    '''
+    student = User.get(int(request.get_argument('studentid')))
+    tutorial = request.get_argument('tutid')
+    if update_type == "flag":
+        if tutorial in student.flagged:
+            del student.flagged[student.flagged.index(tutorial)]
+        else:
+            student.flagged.append(tutorial)
+        student.save()
+        request.write(str(tutorial in student.flagged))
+    elif update_type == "complete":
+        if tutorial in student.completed:
+            del student.completed[student.completed.index(tutorial)]
+        else:
+            student.completed.append(tutorial)
+        student.save()
+        request.write(str(tutorial in student.completed))
+
+@isTeacherLoggedIn
 def class_detail_handler(request, class_id=1):
     '''
     Handle the class student list page
@@ -254,6 +276,7 @@ server.register(r'/svgchecker', checker_handler)
 server.register(r'/tutorial/([0-9]+)', tutorial_handler)
 server.register(r'/student/([0-9]+)', user_detail_handler)
 server.register(r'/class/([0-9]+)', class_detail_handler)
+server.register(r'/update/(.+)', update_tutorial_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)
