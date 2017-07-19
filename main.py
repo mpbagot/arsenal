@@ -39,7 +39,7 @@ def isAdminLoggedIn(function):
     '''
     def decorated_function(request, *args):
         user_id = request.get_secure_cookie('user_id')
-        if user_id and int(user_id) == 0:
+        if user_id and int(user_id) == 1:
             return function(request, *args)
         global insufficient_user_handler
         return insufficient_user_handler(request)
@@ -66,9 +66,12 @@ def tutorial_handler(request, tutorialId=1):
     Serve the Tutorial content
     '''
     tutorial = Tutorial.get(int(tutorialId))
+    if not tutorial:
+        http404_handler(request)
+        return
     user = get_login_user(request)
     html = render_template('tutorial.html', { 'title':tutorial.title, 'user' : user,
-                                        "tutorial" : tutorial
+                                        "tutorial" : tutorial, 'external':tutorial.getResources()
                                         })
     request.write(html)
 
@@ -258,13 +261,42 @@ def http404_handler(request):
     html = render_template('404.html', {'title':'Error 404', 'user' : user})
     request.write(html)
 
+@isAdminLoggedIn
+def admin_handler(request):
+    '''
+    Handle the Admin control panel
+    '''
+    if request.request.method == "GET":
+        user = get_login_user(request)
+        students = User.getAll()
+        tutorials = Tutorial.getAll()
+        request.write(render_template('control_panel.html', {'title':'Admin Control Panel', 'user':user,
+                                                            'students':students, 'tutorials':tutorials}))
+    elif request.request.method == "POST":
+        user_id = tut_id = None
+        try:
+            user_id = request.get_argument('userid')
+        except:
+            pass
+        try:
+            tut_id = request.get_argument('tutid')
+        except:
+            pass
+        print(user_id, tut_id)
+        if user_id:
+            user = User.get(int(user_id))
+            user.delete()
+        elif tut_id:
+            tutorial = Tutorial.get(int(tut_id))
+            tutorial.delete()
+
 @isLoggedIn
 def insufficient_user_handler(request):
     '''
     Handle an insufficient user privileges page
     '''
     user = get_login_user(request)
-    request.write(render_template('user_priv_error.html', {'title':'Invalid User Access', 'user':user,}))
+    request.write(render_template('user_priv_error.html', {'title':'Invalid User Access', 'user':user}))
 
 # Initialise the server
 server = Server(hostname='0.0.0.0', port=80)
@@ -277,6 +309,7 @@ server.register(r'/tutorial/([0-9]+)', tutorial_handler)
 server.register(r'/student/([0-9]+)', user_detail_handler)
 server.register(r'/class/([0-9]+)', class_detail_handler)
 server.register(r'/update/(.+)', update_tutorial_handler)
+server.register(r'/admin/panel', admin_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)
