@@ -26,7 +26,6 @@ class XMLNode:
         data = ' '.join(self.data.split('\n'))
         # Pull all of the XML tags from the SVG file
         tags = [a for a in re.findall('<.+?>', data) if not a.startswith('<?') and not a.startswith('<!')]
-
         # Generate an invalid file error
         if not tags and data:
             self.errors.append('Invalid SVG File')
@@ -41,8 +40,10 @@ class XMLNode:
                 # open the tag and begin recording data
                 opening = tag
             if opening and (tag == '/'+opening or tags[tag_types.index(opening)].endswith('/>')):
-                # Close the tag and pull all of the data in
-                inner_text = ''.join(tags[tag_types.index(opening)+1:i])
+                inner_text = ''
+                if tag != opening:
+                    # Close the tag and pull all of the data in
+                    inner_text = ''.join(tags[tag_types.index(opening)+1:i])
                 # If its a closing tag, then clip the tag type
                 if tag.startswith('/'):
                     tag = tag[1:]
@@ -68,14 +69,16 @@ class TagNode:
         self.attributes = attrs
         self.tag_type = tag_type
         self.inner_text = inner_text
+        self.errors = []
 
     def __str__(self):
         return 'Tag(type={}, inner_text="{}", attributes="{}")'.format(self.tag_type, self.inner_text, self.attributes)
 
     def evaluate(self):
-        node = XMLNode(self.inner_text)
-        node.evaluate()
-        self.errors = node.errors
+        if self.inner_text:
+            node = XMLNode(self.inner_text)
+            node.evaluate()
+            self.errors = node.errors
         for a in self.attributes:
             if a != "style":
                 self.checkAttribute(a, self.attributes[a])
@@ -90,13 +93,13 @@ class TagNode:
         val = val.lower()
         # find an invalid stroke colour attribute
         if a == "stroke":
-            if val not in ('red', 'rgb(255, 0, 0)', '#ff0000', 'blue', 'rgb(0, 0, 255)', '#0000ff', "none"):
+            if val.lower() not in ('red', 'rgb(255, 0, 0)', '#ff0000', 'blue', 'rgb(0, 0, 255)', '#0000ff', "none"):
                 self.errors.append('Stroke colour is not RGB Red or RGB Blue on {} object'.format(self.tag_type))
         # Find an invalid fill colour attribute
         elif a == "fill":
-            if val not in ('black', 'rgb(0, 0, 0)', "#000000", "none"):
+            if val.lower() not in ('black', 'rgb(0, 0, 0)', "#000000", "none"):
                 self.errors.append('Fill colour is not Black in {} object'.format(self.tag_type))
         # Find an invalid stroke width attribute
         elif a == "stroke-width":
-            if val != '0.001':
+            if eval(val) != 0.001:
                 self.errors.append('Incorrect stroke width in {} object'.format(self.tag_type))
