@@ -6,11 +6,18 @@
     <article id="main_article">
       <img id="result" src="{{image}}">
       <h4 id="main_result">{{result[0]}}</h4>
-      <ul>
+      <table id="result_table">
         {%for i in range(len(result)-1)%}
-          <li>{{result[i+1]}}</li>
+          <tr>
+            <td class="result_cell">
+              Object Name:
+            </td>
+            <td class="result_cell">
+              {{result[i+1]}}
+            </td>
+          </tr>
         {%end for%}
-      </ul>
+      </table>
     </article>
     {%include footer.html%}
   </body>

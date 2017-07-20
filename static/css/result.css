@@ -1,7 +1,7 @@
 #result {
   display: block;
   margin: 20px auto;
-  width: 50%;
+  width: 70%;
   border: 3px dashed gray;
 }
 
@@ -9,7 +9,13 @@
   margin-left: 15%;
 }
 
-ul {
+#result_table {
   width: 62%;
+  border: 1px solid gray;
   margin: 0 auto;
+  border-collapse: collapse;
+}
+.result_cell {
+  border: 3px solid lightgray;
+  padding: 3px;
 }
