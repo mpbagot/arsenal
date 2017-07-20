@@ -290,6 +290,17 @@ def admin_handler(request):
             tutorial = Tutorial.get(int(tut_id))
             tutorial.delete()
 
+@isTeacherLoggedIn
+def tutorial_maker_handler(request):
+    '''
+    Handle a request for the tutorial editor
+    '''
+    user = get_login_user(request)
+    if request.request.method == 'GET':
+        request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user}))
+    elif request.request.method == 'POST':
+        pass
+
 @isLoggedIn
 def insufficient_user_handler(request):
     '''
