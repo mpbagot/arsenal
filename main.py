@@ -87,17 +87,6 @@ def tutorials_handler(request):
     request.write(html)
 
 @isLoggedIn
-def flagged_handler(request):
-    '''
-    Handle the flagged tutorials page
-    '''
-    user = get_login_user(request)
-    html = render_template('flagged.html', { 'title':'Flagged Tutorials', 'user' : user,
-                                             'flag_tutors' : user.getFlaggedTutorials()
-                                            })
-    request.write(html)
-
-@isLoggedIn
 def checker_handler(request):
     '''
     Handle the SVG Checker page
@@ -315,7 +304,6 @@ server = Server(hostname='0.0.0.0', port=80)
 # Add the URL listners here
 server.register(r'/', index_handler)
 server.register(r'/tutorials', tutorials_handler)
-server.register(r'/flagged', flagged_handler)
 server.register(r'/svgchecker', checker_handler)
 server.register(r'/tutorial/([0-9]+)', tutorial_handler)
 server.register(r'/student/([0-9]+)', user_detail_handler)
