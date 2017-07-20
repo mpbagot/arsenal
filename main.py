@@ -124,7 +124,8 @@ def upload_handler(request):
         parser = SVGParser(fileData)
         parser.evaluate()
         request.write(render_template('result.html', {'title': 'SVG Scan Results', 'user' : user,
-                                      'result' : parser.result, 'image' : '/static/img/tmp_upload/'+fileName}))
+                                      'result' : parser.result, 'image' : '/static/img/tmp_upload/'+fileName,
+                                      'svg_width': parser.width}))
 
 def login_handler(request):
     '''

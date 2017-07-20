@@ -1,8 +1,11 @@
-#result {
+#result, #result_temp {
   display: block;
   margin: 20px auto;
   width: 70%;
   border: 3px dashed gray;
+}
+#result_temp {
+  opacity: 0;
 }
 
 #main_result {

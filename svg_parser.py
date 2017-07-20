@@ -3,10 +3,12 @@ import re
 class SVGParser:
     def __init__(self, fileData):
         self.data = fileData
+        self.width = 0
 
     def evaluate(self):
         node = XMLNode(self.data)
         node.evaluate()
+        self.width = node.width
         self.result = self.generateResult(node.errors)
 
     def generateResult(self, errors):
@@ -53,11 +55,17 @@ class XMLNode:
         # Iterate and parse each tag
         for tag in self.tags:
             tag.evaluate()
+            if tag.tag_type == "svg":
+                viewbox = tag.attributes.get('viewBox')
+                if viewbox:
+                    self.width = viewbox.split()[2]
+                else:
+                    self.width = tag.attributes.get('width')
             self.errors += tag.errors
 
     def getAttributes(self, tag):
         tag = tag[1:-1]
-        attrs = re.findall(r'[^ \t]+?="[^ \t]+?"', tag)
+        attrs = re.findall(r'[^ \t]+?=".+?"', tag)
         attr_dict = {}
         for a in attrs:
             a = a.strip().split('=')
@@ -98,18 +106,52 @@ class TagNode:
         Check the attribute for validity
         '''
         val = val.lower()
+        error = ''
         # find an invalid stroke colour attribute
         if a == "stroke":
             if val.lower() not in ('red', 'rgb(255, 0, 0)', '#ff0000', 'blue', 'rgb(0, 0, 255)', '#0000ff', "none"):
-                self.errors.append('Stroke colour is not RGB Red or RGB Blue on {} object'.format(self.tag_type))
+                error = 'Stroke colour is not RGB Red or RGB Blue'
         # Find an invalid fill colour attribute
         elif a == "fill":
             if val.lower() not in ('black', 'rgb(0, 0, 0)', "#000000", "none"):
-                self.errors.append('Fill colour is not Black in {} object'.format(self.tag_type))
+                error = 'Fill colour is not Black'
         # Find an invalid stroke width attribute
         elif a == "stroke-width":
             if is_number(val) and eval(val) != 0.001:
-                self.errors.append('Incorrect stroke width in {} object'.format(self.tag_type))
+                error = 'Incorrect stroke width'
+        if error:
+            if self.tag_type == 'rect':
+                x = float(self.attributes.get('x'))
+                y = float(self.attributes.get('y'))
+            elif self.tag_type != 'line':
+                x = float(self.attributes.get('cx'))
+                y = float(self.attributes.get('cy'))
+            else:
+                x = float(self.attributes.get('x1'))
+                y = float(self.attributes.get('y1'))
+            colour = 'black' if self.getColour() != 'black' else 'white'
+            name = self.attributes.get('id')
+            if not name:
+                name = self.tag_type[0].upper()+self.tag_type[1:]
+            self.errors.append([[name, x, y, colour], error])
+
+    def getColour(self):
+        '''
+        Get the fill colour of the object
+        '''
+        if self.attributes.get('fill'):
+            c = self.attributes.get('fill')
+        else:
+            styles = self.attributes.get('style').split(';')
+            for style in styles:
+                if style:
+                    style = style.split(':')
+                    if style[0] == 'fill':
+                        c = style[1]
+        if c.lower() in ['black', '#000000', 'rgb(0, 0, 0)', 'rgb(0,0,0)']:
+            return 'black'
+        else:
+            return c
 
 def is_number(number):
     try:
