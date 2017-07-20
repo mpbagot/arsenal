@@ -75,6 +75,9 @@ class TagNode:
         return 'Tag(type={}, inner_text="{}", attributes="{}")'.format(self.tag_type, self.inner_text, self.attributes)
 
     def evaluate(self):
+        '''
+        Parse the attributes of the tag and check for validity
+        '''
         if self.inner_text:
             node = XMLNode(self.inner_text)
             node.evaluate()
@@ -86,10 +89,14 @@ class TagNode:
             elif a == "style":
                 styles = self.attributes[a].split(';')
                 for style in styles:
-                    style = style.split(':')
-                    self.checkAttribute(*style)
+                    if style:
+                        style = style.split(':')
+                        self.checkAttribute(*style)
 
     def checkAttribute(self, a, val):
+        '''
+        Check the attribute for validity
+        '''
         val = val.lower()
         # find an invalid stroke colour attribute
         if a == "stroke":
@@ -101,5 +108,12 @@ class TagNode:
                 self.errors.append('Fill colour is not Black in {} object'.format(self.tag_type))
         # Find an invalid stroke width attribute
         elif a == "stroke-width":
-            if eval(val) != 0.001:
+            if is_number(val) and eval(val) != 0.001:
                 self.errors.append('Incorrect stroke width in {} object'.format(self.tag_type))
+
+def is_number(number):
+    try:
+        float(number)
+        return True
+    except ValueError:
+        return False
