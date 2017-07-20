@@ -15,7 +15,7 @@
   height: 400px;
   margin: 20px auto;
   width: 60%;
-  background-color: lightblue;
+  background-color: lightgray;
 }
 
 div {
@@ -29,7 +29,7 @@ div {
 }
 
 #upload_button:hover {
-  color: royalblue;
+  color: #FF500A;
 }
 
 .box.has-advanced-upload {

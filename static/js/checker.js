@@ -35,6 +35,10 @@ if (isAdvancedUpload()) {
     //AJAX upload for modern browsers
     var formData = new FormData();
 
+    if (!droppedFiles) {
+      droppedFiles = document.getElementById('svg_upload').files;
+    }
+
     for (var i = 0; i < droppedFiles.length; i++) {
       var file = droppedFiles[i];
       if (file.name.substring(file.name.length-4, file.name.length) != '.svg') {
