@@ -7,15 +7,19 @@
   <img style="display: inline;" align="right" src="/static/img/footer_right.png">
 </footer>
 <script>
-  footer = document.getElementById('footer');
-  article = document.getElementById('main_article');
-  x = (document.getElementById('drop_menu').offsetHeight + 230)
-  y = (article.offsetHeight)
-  if (x > y) {
-    footer.style.top = (x+170)+'px';
-  } else {
-    footer.style.top = (y+170)+'px';
+  function adjustFooter() {
+    footer = document.getElementById('footer');
+    article = document.getElementById('main_article');
+    x = (document.getElementById('drop_menu').offsetHeight + 230)
+    y = (article.offsetHeight)
+    if (x > y) {
+      footer.style.top = (x+170)+'px';
+    } else {
+      footer.style.top = (y+170)+'px';
+    }
+    span = document.getElementById('footer_info');
+    span.style.width = (footer.offsetWidth-460)+'px';
   }
-  span = document.getElementById('footer_info');
-  span.style.width = (footer.offsetWidth-460)+'px';
+  adjustFooter();
+  window.setInterval(adjustFooter, 200);
 </script>
