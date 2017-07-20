@@ -30,7 +30,6 @@ aside {
   background-color: gray;
   padding-top: 110px;
   margin-left: 0;
-  /*visibility: hidden;*/
 }
 
 #main_article {
@@ -40,6 +39,7 @@ aside {
   width: 78%;
   border: 5px solid lightgray;
   border-radius: 10px;
+  padding-bottom: 30px;
 }
 
 .links {
