@@ -14,11 +14,12 @@
 
 #result_table {
   width: 62%;
-  border: 1px solid gray;
+  /*border: 1px solid gray;*/
   margin: 0 auto;
   border-collapse: collapse;
 }
 .result_cell {
-  border: 3px solid lightgray;
+  border-left: 3px solid lightgray;
+  border-top: 3px solid lightgray;
   padding: 3px;
 }
