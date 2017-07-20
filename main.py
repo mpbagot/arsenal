@@ -200,7 +200,7 @@ def signout_handler(request):
     request.clear_cookie('user_id')
     request.redirect('/')
 
-@isTeacherLoggedIn
+@isLoggedIn
 def user_detail_handler(request, user_id=1):
     '''
     Handle the student details/progress page
@@ -209,7 +209,7 @@ def user_detail_handler(request, user_id=1):
     user = get_login_user(request)
     teacher = User.get(Class.get(student.current_class).teacher_id)
     tutorials = student.getTutorials()
-    if Class.get(student.current_class).teacher_id == user.id or user.id == 1:
+    if Class.get(student.current_class).teacher_id == user.id or user.id == 1 or user.id == student.id:
         request.write(render_template('student_detail.html', {'title':student.name+"'s Details", 'user': user,
                                                             'student':student, 'teacher':teacher,
                                                             'incomplete':tutorials[1], 'com_flag':tutorials[0],
