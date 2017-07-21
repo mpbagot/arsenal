@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <head>
-{%include header.html%}
-<article id="main_article">
-  <h2>Tutorials</h2>
-  {%for i in range(len(units))%}
-    <h2>Unit {{i}}: {{units[i].title}}</h2>
-      {%for tutorial in units[i].tutorials%}
-        <!-- Create a tutorial rectangle thing here with the tutorial details. -->
+  <link rel="stylesheet" href="/static/css/tutorials.css">
+  {%include header.html%}
+  <article id="main_article">
+    <nav id="topic_links">
+      <a id="0" class="selected button" href="javascript:toggleTutorials(0);">All</a>
+      {%for i in range(len(units))%}
+        <a id="{{units[i].id}}" class="button" href="javascript:toggleTutorials({{units[i].id}});">Topic {{units[i].id}}</a>
       {%end for%}
-  {%end for%}
-</article>
-{%include footer.html%}
+    </nav>
+    <div id="tutorial_list">
+      {%for i in range(len(units))%}
+        {%for tutorial in units[i].getTutorials()%}
+          <a href="/tutorial/{{tutorial.id}}">
+            <div class="tutorial_preview">
+              <h2 class="tutorial_title">{{tutorial.title}}</h2>
+              <p class="tutorial_text">{{tutorial.getPreview()}}</p>
+            </div>
+          </a>
+        {%end for%}
+      {%end for%}
+    </div>
+  </article>
+  {%include footer.html%}
+  <script>
+    var list = document.getElementById('tutorial_list');
+    var oldSelected = 0;
+    var htmlArray = {0 : list.innerHTML
+      {%for i in range(len(units))%}
+        , {{units[i].id}} : '{%for tutorial in units[i].getTutorials()%}<a href="/tutorial/{{tutorial.id}}"><div class="tutorial_preview"><h2 class="tutorial_title">{{tutorial.title}}</h2><p class="tutorial_text">{{tutorial.getPreview()}}</p></div></a>{%end for%}'
+      {%end for%}
+    };
+    function toggleTutorials(unit_id) {
+      if (htmlArray[unit_id] && unit_id != oldSelected) {
+        list.innerHTML = htmlArray[unit_id];
+        document.getElementById(unit_id).classList.add('selected');
+        document.getElementById(oldSelected).classList.remove('selected');
+        oldSelected = unit_id;
+      } else {
+        console.log('Stop fiddling young kiddo.');
+      }
+    }
+  </script>
 </body>
 </html>

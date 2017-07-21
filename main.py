@@ -81,8 +81,10 @@ def tutorials_handler(request):
     Handle the tutorials page
     '''
     user = get_login_user(request)
+    print(Unit.get(1))
+    print(Unit.getAll())
     html = render_template('tutorials.html', { 'title':'Tutorial Index', 'user' : user,
-                                        "units" : []
+                                        "units" : Unit.getAll()
                                         })
     request.write(html)
 

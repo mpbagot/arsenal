@@ -1,0 +1,37 @@
+.tutorial_preview {
+  width: 40%;
+  height: 200px;
+  display: inline-block;
+  margin: 10px 4%;
+  border-width: 4px;
+  border-style: inset;
+  color: black;
+  text-decoration: none;
+}
+.button {
+  background-color: lightgray;
+  color: black;
+  text-decoration: none;
+  margin: 0;
+  padding: 10px 30px;
+  border: 1px solid gray;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.selected {
+  background-color: #FF7012;
+  color: white;
+}
+#topic_links {
+  width: 95%;
+  margin: 0 auto;
+  height: 50px;
+  padding-top: 10px;
+}
+.tutorial_title {
+  margin-left: 20px;
+}
+.tutorial_text {
+  margin-left: 40px;
+}

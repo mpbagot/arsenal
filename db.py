@@ -70,6 +70,15 @@ class Tutorial:
             tutorials.append(Tutorial.get(uid))
         return tutorials
 
+    def getPreview(self):
+        preview = 'No preview text is available for this tutorial.'
+        for block in self.text[1:]:
+            if block.startswith('<p'):
+                preview = block.split('>')[1].split('<')[0]
+                if len(preview > 130):
+                    preview = preview[:130]
+        return preview
+
 class User:
     '''
     has a name, image, is_teacher, class (part of, not leading) and completed and flagged tutorial lists.
@@ -349,8 +358,7 @@ class Unit:
         units = []
         for row in rows:
             uid, *meh = row
-            if uid != 1:
-                units.append(Unit.get(uid))
+            units.append(Unit.get(uid))
         return units
 
 class Resource:
@@ -429,6 +437,6 @@ if __name__ == "__main__":
     r3.save()
     print(Tutorial.get(1).getResources())
     print(Tutorial.get(2).getResources())
-    admin = User('Mitchell', 'meh', is_teacher=True, current_class=1)
-    admin.save()
-    print(admin)
+    # admin = User('Mitchell', 'meh', is_teacher=True, current_class=1)
+    # admin.save()
+    # print(admin)
