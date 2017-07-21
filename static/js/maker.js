@@ -62,3 +62,20 @@ function sendResourceUpdate(toAdd, title, link, parent) {
     xhr.send('type=resource&action=delete&resid='+res_id);
   }
 }
+function processText() {
+  var text_area = document.getElementById('text_area');
+  var required = document.getElementById('tutorial_content');
+  var text = '[';
+  for (i = 0; i < required.children.length; i++) {
+    var child = required.children[i];
+    if (i != 0) {
+      var wrap = document.createElement('div');
+      wrap.appendChild(child.children[1].cloneNode(true));
+    } else {
+      var wrap = child.children[1];
+    }
+    text += '"'+wrap.innerHTML+'",';
+  }
+  text = text.substring(0, text.length-1)+']';
+  text_area.value = text;
+}

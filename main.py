@@ -296,10 +296,7 @@ def tutorial_maker_handler(request, tutorial_id=0):
         request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user, 'tutorial':tutorial.text}))
     elif request.request.method == 'POST':
         tut_id = int(request.get_secure_cookie('tutorial_id'))
-        call_type = request.get_argument('type')
-        if call_type == "tutorial":
-            tutorial = Tutorial.get(tut_id)
-        elif call_type == "resource":
+        try:
             action = request.get_argument('action')
             if action == 'add':
                 title = request.get_argument('title')
@@ -310,6 +307,14 @@ def tutorial_maker_handler(request, tutorial_id=0):
             else:
                 resource = Resource.get(int(request.get_argument('resid')))
                 resource.delete()
+        except:
+            text = request.get_field('text')
+            print(text)
+            tutorial = Tutorial.get(tut_id)
+            tutorial.text = eval(text)
+            tutorial.title = tutorial.text[0]
+            tutorial.save()
+            request.redirect('/tutorial/'+str(tut_id))
 
 @isLoggedIn
 def insufficient_user_handler(request):

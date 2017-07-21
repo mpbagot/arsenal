@@ -2,7 +2,10 @@
 <head>
   <link href="/static/css/maker.css" rel="stylesheet">
   {%include header.html%}
+  <form action="" method="post" enctype="multipart/form-data">
+  <textarea name='text' style="visibility: hidden;" id="text_area"></textarea>
   <aside id="elements">
+    <button onclick="processText();">Save Tutorial</button>
     Elements:
     <ul>
       <li>Heading</li>
@@ -10,7 +13,18 @@
     </ul>
   </aside>
   <article id="main_article">
-    <form action="" method="post" enctype="multipart/form-data" id="tutorial">
+      <div id="tutorial_content">
+        <span>
+          <button type="button" onclick="this.parentNode.children[1].innerHTML = prompt('Set Title:', this.parentNode.children[1].innerHTML);">Change Title</button>
+          <h2>{{tutorial[0]}}</h2>
+        </span>
+        {%for i in range(len(tutorial)-1)%}
+          <span id="section_{{i+1}}">
+            <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="remove_button">X</button>
+            {{tutorial[i+1]}}
+          </span>
+        {%end for%}
+      </div>
       <div id="dropper">
         Drop elements from the list on the left to add them to the tutorial
       </div>
@@ -24,8 +38,8 @@
         </div>
       </div>
       <button id="add_resource" type="button" onclick="addResource(false);">New Link</button>
-    </form>
   </article>
+  </form>
   {%include footer.html%}
   <script src="/static/js/maker.js"></script>
 </body>
