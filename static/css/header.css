@@ -24,7 +24,7 @@ header {
   background-color: gray;
 }
 
-aside {
+#drop_menu {
   width: 20%;
   height: 200px;
   background-color: gray;

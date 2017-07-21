@@ -81,11 +81,8 @@ def tutorials_handler(request):
     Handle the tutorials page
     '''
     user = get_login_user(request)
-    print(Unit.get(1))
-    print(Unit.getAll())
-    html = render_template('tutorials.html', { 'title':'Tutorial Index', 'user' : user,
-                                        "units" : Unit.getAll()
-                                        })
+    html = render_template('tutorials.html', {'title':'Tutorial Index', 'user' : user,
+                                        "units" : Unit.getAll()})
     request.write(html)
 
 @isLoggedIn
@@ -283,15 +280,36 @@ def admin_handler(request):
             tutorial.delete()
 
 @isTeacherLoggedIn
-def tutorial_maker_handler(request):
+def tutorial_maker_handler(request, tutorial_id=0):
     '''
     Handle a request for the tutorial editor
     '''
     user = get_login_user(request)
     if request.request.method == 'GET':
-        request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user}))
+        tutorial = None
+        if tutorial_id and is_number(tutorial_id) and Tutorial.get(int(tutorial_id)):
+            tutorial = Tutorial.get(int(tutorial_id))
+        else:
+            tutorial = Tutorial(1, '[""]')
+            tutorial.save()
+        request.set_secure_cookie('tutorial_id', str(tutorial.id))
+        request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user, 'tutorial':tutorial.text}))
     elif request.request.method == 'POST':
-        pass
+        tut_id = int(request.get_secure_cookie('tutorial_id'))
+        call_type = request.get_argument('type')
+        if call_type == "tutorial":
+            tutorial = Tutorial.get(tut_id)
+        elif call_type == "resource":
+            action = request.get_argument('action')
+            if action == 'add':
+                title = request.get_argument('title')
+                link = request.get_argument('link')
+                resource = Resource(tut_id, link, title)
+                resource.save()
+                request.write(str(resource.id))
+            else:
+                resource = Resource.get(int(request.get_argument('resid')))
+                resource.delete()
 
 @isLoggedIn
 def insufficient_user_handler(request):
@@ -300,6 +318,13 @@ def insufficient_user_handler(request):
     '''
     user = get_login_user(request)
     request.write(render_template('user_priv_error.html', {'title':'Invalid User Access', 'user':user}))
+
+def is_number(n):
+    try:
+        float(n)
+        return True
+    except ValueError:
+        return False
 
 # Initialise the server
 server = Server(hostname='0.0.0.0', port=80)
@@ -312,6 +337,7 @@ server.register(r'/student/([0-9]+)', user_detail_handler)
 server.register(r'/class/([0-9]+)', class_detail_handler)
 server.register(r'/update/(.+)', update_tutorial_handler)
 server.register(r'/admin/panel', admin_handler)
+server.register(r'/tutorial/editor/([0-9]*)', tutorial_maker_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)

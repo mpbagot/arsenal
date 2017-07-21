@@ -2,13 +2,31 @@
 <head>
   <link href="/static/css/maker.css" rel="stylesheet">
   {%include header.html%}
+  <aside id="elements">
+    Elements:
+    <ul>
+      <li>Heading</li>
+      <li>Paragraph</li>
+    </ul>
+  </aside>
   <article id="main_article">
-    <h1 id="title">Tutorial Editor</h1>
     <form action="" method="post" enctype="multipart/form-data" id="tutorial">
-
+      <div id="dropper">
+        Drop elements from the list on the left to add them to the tutorial
+      </div>
+      <br>
+      <h3 style="margin-left: 20px;">External Resources</h3>
+      <div id="ext_resources">
+        <div id="resource_adder">
+          <input type="text" id="resource_title" placeholder="Title">
+          <input type="text" id="resource_link" placeholder="Link">
+          <button type="button" onclick="addResource(true);" style="display: block; margin: 10px auto;">Save Resource</button>
+        </div>
+      </div>
+      <button id="add_resource" type="button" onclick="addResource(false);">New Link</button>
     </form>
   </article>
-  <script src="/static/js/maker.js"></script>
   {%include footer.html%}
+  <script src="/static/js/maker.js"></script>
 </body>
 </html>

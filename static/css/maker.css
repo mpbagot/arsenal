@@ -1,0 +1,46 @@
+#elements {
+  border: 1px solid black;
+  width: 20%;
+  background-color: gray;
+  margin-top: 150px;
+}
+.remove_button {
+  color: white;
+  background-color: red;
+  height: 25px;
+  width: 25px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+.resource {
+  border-bottom: 1px solid black;
+  width: 60%;
+  margin: 0 auto;
+  height: 50px;
+  padding: 5px;
+}
+#add_resource {
+  margin: 10px auto;
+  display: inherit;
+  height: 40px;
+  width: 100px;
+}
+#resource_adder {
+  width: 60%;
+  margin: 20px auto;
+}
+#resource_adder > button {
+  height: 40px;
+  width: 150px;
+}
+#resource_adder > input {
+  height: 25px;
+}
+#resource_title {
+  width: 25%;
+}
+#resource_link {
+  width: 70%;
+}
