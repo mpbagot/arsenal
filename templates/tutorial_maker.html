@@ -16,12 +16,12 @@
       <div id="tutorial_content">
         <span>
           <button type="button" onclick="this.parentNode.children[1].innerHTML = prompt('Set Title:', this.parentNode.children[1].innerHTML);">Change Title</button>
-          <h2>{{tutorial[0]}}</h2>
+          <h2>{{tutorial.text[0]}}</h2>
         </span>
-        {%for i in range(len(tutorial)-1)%}
+        {%for i in range(len(tutorial.text)-1)%}
           <span id="section_{{i+1}}">
             <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="remove_button">X</button>
-            {{tutorial[i+1]}}
+            {{safe tutorial.text[i+1]}}
           </span>
         {%end for%}
       </div>
@@ -31,6 +31,13 @@
       <br>
       <h3 style="margin-left: 20px;">External Resources</h3>
       <div id="ext_resources">
+        {%for resource in tutorial.getResources()%}
+          <div class="resource" id="{{resource.id}}">
+            <button type="button" class="remove_button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);sendResourceUpdate(false, '', '', this.parentNode);">X</button>
+            <p style="margin: 2px 20px; display: inline-block">Title: {{resource.title}}</p>
+            <p style="margin: 2px 20px; display: inline-block">Link: {{resource.link}}</p>
+          </div>
+        {%end for%}
         <div id="resource_adder">
           <input type="text" id="resource_title" placeholder="Title">
           <input type="text" id="resource_link" placeholder="Link">

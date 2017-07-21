@@ -293,10 +293,11 @@ def tutorial_maker_handler(request, tutorial_id=0):
             tutorial = Tutorial(1, '[""]')
             tutorial.save()
         request.set_secure_cookie('tutorial_id', str(tutorial.id))
-        request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user, 'tutorial':tutorial.text}))
+        request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user, 'tutorial':tutorial}))
     elif request.request.method == 'POST':
         tut_id = int(request.get_secure_cookie('tutorial_id'))
         try:
+            print('meh')
             action = request.get_argument('action')
             if action == 'add':
                 title = request.get_argument('title')

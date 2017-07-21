@@ -1,5 +1,3 @@
-var resourceArray = {};
-
 var resourceAdder = document.getElementById('resource_adder');
 resourceAdder.parentNode.removeChild(resourceAdder);
 var adderButton = document.getElementById('add_resource');
@@ -48,7 +46,7 @@ function addResource(save_link) {
 }
 function sendResourceUpdate(toAdd, title, link, parent) {
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/tutorial/editor', true);
+  xhr.open('POST', '/tutorial/editor/', true);
   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   if (toAdd) {
     xhr.onload = function() {
