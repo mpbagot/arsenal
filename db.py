@@ -342,6 +342,17 @@ class Unit:
         id, title = row
         return Unit(title, id)
 
+    @staticmethod
+    def getAll():
+        cur.execute('''SELECT * FROM units''')
+        rows = cur.fetchall()
+        units = []
+        for row in rows:
+            uid, *meh = row
+            if uid != 1:
+                units.append(Unit.get(uid))
+        return units
+
 class Resource:
     '''
     has a title, tutorial_id, and a link
