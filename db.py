@@ -10,32 +10,29 @@ cur = conn.cursor()
 
 class Tutorial:
     '''
-    Has a list of external resources, unit_id, title,
-    isImage(main media video or img), main image/video, uid, and paragraph list
+    Has a list of external resources, unit_id, title, uid, and paragraph list
     '''
-    def __init__(self, unitid, text, image, is_image=True, id=None):
+    def __init__(self, unitid, text, id=None):
         self.text = eval(text)
         self.title = self.text[0]
         self.unit_id = unitid
-        self.image = image
-        self.is_image = is_image
         self.id = id
 
     def __str__(self):
-        return 'Tutorial(UnitID={}, image={}, is_image={}, id={})'.format(
-                    self.unit_id, self.image, self.is_image, self.id)
+        return 'Tutorial(UnitID={}, id={})'.format(
+                    self.unit_id, self.id)
 
     def save(self):
         if self.id is None:
             self.add()
         else:
-            cur.execute('''UPDATE tutorials SET text = ?, unitid = ?, image = ?, is_image = ? WHERE id = ?''',
-                        (str(self.text), self.unit_id, self.image, self.is_image, self.id))
+            cur.execute('''UPDATE tutorials SET text = ?, unitid = ? WHERE id = ?''',
+                        (str(self.text), self.unit_id, self.id))
         conn.commit()
 
     def add(self):
-        cur.execute('''INSERT INTO tutorials (unitid, text, image, is_image) VALUES (?, ?, ?, ?)''',
-                    (self.unit_id, str(self.text), self.image, self.is_image))
+        cur.execute('''INSERT INTO tutorials (unitid, text) VALUES (?, ?)''',
+                    (self.unit_id, str(self.text)))
         self.id = cur.lastrowid
 
     def delete(self):
@@ -57,8 +54,8 @@ class Tutorial:
         row = cur.fetchone()
         if row is None:
             return None
-        id, unitid, text, image, is_image = row
-        return Tutorial(unitid, text, image, bool(is_image), id)
+        id, unitid, text = row
+        return Tutorial(unitid, text, id)
 
     @staticmethod
     def getAll():
@@ -143,11 +140,11 @@ class User:
         # Generate the condition statement for the SQL
         condition = " && ".join(["id != {}".format(int(i)) for i in self.completed])
         # Pull the tutorials from the database
-        cur.execute('''SELECT id, image FROM tutorials WHERE ?''', (condition,))
+        cur.execute('''SELECT id, text FROM tutorials WHERE ?''', (condition,))
         rows = cur.fetchall()
         tutorials = []
         for row in rows:
-            uid, image = row
+            uid, text = row
             # If there are fewer than 5 tutorials currently in the list
             # then append the tutorial
             if len(tutorials) < 5:
@@ -162,11 +159,11 @@ class User:
         # Generate the condition statement for the SQL
         condition = " && ".join(["id = {}".format(int(i)) for i in self.completed])
         # Pull the tutorials from the database
-        cur.execute('''SELECT id, image FROM tutorials WHERE ?''', (condition,))
+        cur.execute('''SELECT id, text FROM tutorials WHERE ?''', (condition,))
         rows = cur.fetchall()
         tutorials = []
         for row in rows:
-            uid, image = row
+            uid, text = row
             tutorials.append(Tutorial.get(uid))
         # Return the tutorial list.
         return tutorials
@@ -177,12 +174,12 @@ class User:
         '''
         flagged = self.getFlaggedTutorials()
         completed = self.getCompletedTutorials()
-        cur.execute('''SELECT id, image from tutorials''')
+        cur.execute('''SELECT id, text from tutorials''')
         rows = cur.fetchall()
         # Get all of the tutorials into an array
         tutorials = []
         for row in rows:
-            uid, image = row
+            uid, text = row
             tutorials.append(Tutorial.get(uid))
         # Get the array of unique tutorials
         com_flag = []
@@ -421,10 +418,10 @@ if __name__ == "__main__":
     print(u)
     u2 = Unit.get(1)
     print(u2)
-    t = Tutorial(1, "['bleh', 'meh']", '')
+    t = Tutorial(1, "['bleh', 'meh']")
     t.save()
     print(t)
-    t2 = Tutorial(1, "['meh', 'bleh']", '')
+    t2 = Tutorial(1, "['meh', 'bleh']")
     t2.save()
     print(t2)
     r = Resource(1, 'facebook.com', 'trash')

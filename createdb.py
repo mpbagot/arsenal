@@ -43,8 +43,6 @@ cur.execute('''
   	id INTEGER NOT NULL,
   	unitid INTEGER NOT NULL,
   	text TEXT,
-    image TEXT,
-    is_image BOOLEAN NOT NULL,
   	PRIMARY KEY (id),
   	FOREIGN KEY (unitid) REFERENCES units(id) ON DELETE CASCADE
 );
