@@ -1,8 +1,23 @@
 #elements {
-  border: 1px solid black;
-  width: 20%;
+  width: 19.5%;
   background-color: gray;
-  margin-top: 50px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  z-index: 999;
+  border-top: 2px solid #FF4000;
+  border-left: 2px solid #FF4000;
+}
+#elements > ul > li {
+  border: 3px solid lightgray;
+  border-bottom: none;
+  border-right: none;
+  padding: 5px 10px;
+  list-style-type: none;
+  margin-left: -40px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+
 }
 .remove_button {
   color: white;
