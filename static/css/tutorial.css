@@ -1,0 +1,29 @@
+.tutorial_p {
+  width: 90%;
+  margin: 0 auto;
+}
+.tutorial_h3 {
+  width: 90%;
+  margin-left: 4%;
+}
+.tutorial_img {
+  display: block;
+  width: 60%;
+  margin: 20px auto;
+}
+.tutorial_hr {
+  width: 90%;
+}
+.tutorial_video {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+}
+.tutorial_thumb {
+  width: 5%;
+  display: inline;
+}
+#current_paragraph {
+  width: 90%;
+  margin: 0 auto;
+}

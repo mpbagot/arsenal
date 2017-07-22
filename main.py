@@ -315,6 +315,28 @@ def tutorial_maker_handler(request, tutorial_id=0):
             tutorial.save()
             request.redirect('/tutorial/'+str(tut_id))
 
+@isTeacherLoggedIn
+def tutorial_upload_handler(request):
+    if request.request.method == 'GET':
+        http404_handler(request)
+        return
+    elif request.request.method == 'POST':
+        fileTuple = request.get_file('upload_file')
+        tut_id = request.get_secure_cookie('tutorial_id').decode()
+        tut_length = request.get_secure_cookie('tutorial_length')
+        if not tut_length:
+            tut_length = 1
+        tut_length = int(tut_length)
+        print(fileTuple[:-1])
+        fileData = fileTuple[-1]
+        name = tut_id + str(len(Tutorial.get(int(tut_id)).text)+tut_length)
+        fileName = name+'.'+fileTuple[0].split('.')[-1]
+        with open('static/img/tutorial/'+fileName, 'wb') as f:
+            f.write(fileData)
+        request.write('/static/img/tutorial/'+fileName)
+        tut_length += 1
+        request.set_secure_cookie('tutorial_length', str(tut_length))
+
 @isLoggedIn
 def insufficient_user_handler(request):
     '''
@@ -342,6 +364,7 @@ server.register(r'/class/([0-9]+)', class_detail_handler)
 server.register(r'/update/(.+)', update_tutorial_handler)
 server.register(r'/admin/panel', admin_handler)
 server.register(r'/tutorial/editor/([0-9]*)', tutorial_maker_handler)
+server.register(r'/tutorial/upload', tutorial_upload_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
 server.register(r'/signup', signup_handler)

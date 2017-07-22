@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <head>
   <link href="/static/css/maker.css" rel="stylesheet">
+  <link href="/static/css/tutorial.css" rel="stylesheet">
   {%include header.html%}
   <form action="" method="post" enctype="multipart/form-data">
   <textarea name='text' style="visibility: hidden;" id="text_area"></textarea>
   <aside id="elements">
-    <button onclick="processText();">Save Tutorial</button>
+    <button class="save_button" onclick="processText();"><strong>Save Tutorial</strong></button>
     Elements:
     <ul>
-      <li>Heading</li>
-      <li>Paragraph</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Heading</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Paragraph</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Blank Spacer</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Spacer Line</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Image</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Thumbnail Image</li>
+      <li ondragstart="drag(event, this.innerHTML);" draggable="true">Video</li>
     </ul>
   </aside>
   <article id="main_article">
       <div id="tutorial_content">
         <span>
-          <button type="button" onclick="this.parentNode.children[1].innerHTML = prompt('Set Title:', this.parentNode.children[1].innerHTML);">Change Title</button>
-          <h2>{{tutorial.text[0]}}</h2>
+          <h2 style="margin-left: 10px;">{{tutorial.text[0]}}</h2>
+          <button type="button" class="save_button" style="width: 50%;" onclick="this.parentNode.children[0].innerHTML = prompt('Set Title:', this.parentNode.children[0].innerHTML);">Change Title</button>
         </span>
+        <hr style="width: 90%">
         {%for i in range(len(tutorial.text)-1)%}
           <span id="section_{{i+1}}">
             <button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" class="remove_button">X</button>
@@ -25,8 +32,8 @@
           </span>
         {%end for%}
       </div>
-      <div id="dropper">
-        Drop elements from the list on the left to add them to the tutorial
+      <div id="dropper" ondragover="event.preventDefault();" ondrop="drop(event);">
+        <p id="dropper_info">Drop elements here from the list on the left to add them to the tutorial</p>
       </div>
       <br>
       <h3 style="margin-left: 20px;">External Resources</h3>
