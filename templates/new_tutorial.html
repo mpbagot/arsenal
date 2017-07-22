@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+  {%include header.html%}
+  <article id="main_article">
+  <form id="meh" action="" method="post" enctype="multipart/form-data">
+    Tutorial Title: <input type="text" name="tut_title" placeholder="Tutorial Title"><br>
+    Topic: <select name="unit" id="topic_choose">
+      {%for unit in units%}
+        <option value="{{unit.id}}">{{unit.title}}</option>
+      {%end for%}
+    </select><button id="new_topic" type="button" onclick="unhideTopic('visible');">+</button>
+    <br><span><input id="topic_title" type="text" name="unit_title" placeholder="New Topic Title">
+    <button type="button" onclick="saveTopic();" id="topic_save">Save Topic</button></span><br>
+    <button id="submit_button">Create Tutorial</button>
+  </form>
+</article>
+  <style>
+    #topic_save, #topic_title {
+      visibility: hidden;
+      margin-top: 20px;
+    }
+    span {
+      margin-left: 30%;
+    }
+    select {
+      width: 60%;
+      margin-top: 10px;
+      height: 30px;
+      border: 2px solid #FF7012;
+    }
+    #new_topic {
+      height: 30px;
+      width: 30px;
+      padding: 0;
+    }
+    #meh {
+       padding: 50px;
+       height: 190px;
+       width: 60%;
+       margin: 0 auto;
+    }
+    button, input {
+      height: 30px;
+      background-color: #FF8032;
+      font-weight: bold;
+      color: black;
+      border: 2px solid #FF7012;
+    }
+    #submit_button {
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+  <script>
+  function unhideTopic(choice) {
+    document.getElementById('topic_title').style.visibility = choice;
+    document.getElementById('topic_save').style.visibility = choice;
+  }
+  function saveTopic() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', '/tutorial/new', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      if (xhr.status == 200) {
+        var option = document.createElement('OPTION');
+        option.value = xhr.responseText;
+        option.innerHTML = document.getElementById('topic_title').value;
+        document.getElementById('topic_choose').appendChild(option);
+        unhideTopic('hidden');
+      }
+    }
+    xhr.send('type=unit&title='+document.getElementById('topic_title').value);
+  }
+  </script>
+</body>
+</html>

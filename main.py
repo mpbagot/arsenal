@@ -280,7 +280,28 @@ def admin_handler(request):
             tutorial.delete()
 
 @isTeacherLoggedIn
-def tutorial_maker_handler(request, tutorial_id=0):
+def tutorial_maker_handler(request):
+    if request.request.method == 'GET':
+        user = get_login_user(request)
+        request.write(render_template('new_tutorial.html', {'title':'Create New Tutorial',
+                                                    'user':user, 'units':Unit.getAll()}))
+    elif request.request.method == 'POST':
+        try:
+            call_type = request.get_argument('type')
+            if call_type == "unit":
+                unit = Unit(request.get_argument('title'))
+                unit.save()
+                request.write(str(unit.id))
+        except:
+            unit = request.get_field('unit')
+            print(unit)
+            title = request.get_field('tut_title')
+            tutorial = Tutorial(int(unit), str([title]))
+            tutorial.save()
+            request.redirect('/tutorial/editor/{}'.format(tutorial.id))
+
+@isTeacherLoggedIn
+def tutorial_editor_handler(request, tutorial_id=0):
     '''
     Handle a request for the tutorial editor
     '''
@@ -290,8 +311,8 @@ def tutorial_maker_handler(request, tutorial_id=0):
         if tutorial_id and is_number(tutorial_id) and Tutorial.get(int(tutorial_id)):
             tutorial = Tutorial.get(int(tutorial_id))
         else:
-            tutorial = Tutorial(1, '[""]')
-            tutorial.save()
+            http404_handler(request)
+            return
         request.set_secure_cookie('tutorial_id', str(tutorial.id))
         request.write(render_template('tutorial_maker.html', {'title':'Tutorial Maker', 'user':user, 'tutorial':tutorial}))
     elif request.request.method == 'POST':
@@ -363,7 +384,8 @@ server.register(r'/student/([0-9]+)', user_detail_handler)
 server.register(r'/class/([0-9]+)', class_detail_handler)
 server.register(r'/update/(.+)', update_tutorial_handler)
 server.register(r'/admin/panel', admin_handler)
-server.register(r'/tutorial/editor/([0-9]*)', tutorial_maker_handler)
+server.register(r'/tutorial/new', tutorial_maker_handler)
+server.register(r'/tutorial/editor/([0-9]*)', tutorial_editor_handler)
 server.register(r'/tutorial/upload', tutorial_upload_handler)
 server.register(r'/upload', upload_handler)
 server.register(r'/login', login_handler)
