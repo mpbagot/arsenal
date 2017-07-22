@@ -18,6 +18,9 @@
       <li><a href="{{resource.link}}">{{resource.title}}</a></li>
     {%end for%}
   </ul>
+  {%if user.is_teacher%}
+    <a href="/tutorial/editor/{{tutorial.id}}" style="color: white; padding: 15px 0; text-align: center; text-decoration: none; display:block; background-color: #FF7012; width: 90%;">Edit Tutorial</a>
+  {%end if%}
 </article>
 {%include footer.html%}
 </body>
