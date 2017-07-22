@@ -45,6 +45,9 @@
       {%if user.class_id is not None%}
         <a class="links" href="/class/{{user.class_id}}">Class List</a>
       {%end if%}
+      {%if user.class_id is None%}
+        <a class="links" href="/class/new">Create Class</a>
+      {%end if%}
     {%end if%}
     {%if user.id == 1%}
       <a class="links" href="/admin/panel">Control Panel</a>

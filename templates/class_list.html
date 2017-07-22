@@ -3,6 +3,7 @@
   <link href="/static/css/class_list.css" rel="stylesheet">
   {%include header.html%}
   <article id="main_article">
+    <h3 style="margin-left: 30px;">Class Password: {{class_obj.password}}</h3>
     {%for student in students%}
       <div class="student_detail">
         <img class="student_avatar" width="120px" height="120px" src="/static/img/user_img/{{student.id}}.png">

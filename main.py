@@ -246,9 +246,19 @@ def class_detail_handler(request, class_id=1):
     user = get_login_user(request)
     if current_class.teacher_id == user.id or user.id == 1:
         request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
-                                                        'students':current_class.getStudents()}))
+                                                        'students':current_class.getStudents(), 'class_obj':current_class}))
     else:
         insufficient_user_handler(request)
+
+@isTeacherLoggedIn
+def new_class_handler(request):
+    '''
+    Create a new class for the teacher and redirect
+    '''
+    user = get_login_user(request)
+    new_class = Class(user.id)
+    new_class.save()
+    request.redirect('/class/'+str(new_class.id))
 
 @isLoggedIn
 def http404_handler(request):
@@ -392,6 +402,7 @@ server.register(r'/svgchecker', checker_handler)
 server.register(r'/tutorial/([0-9]+)', tutorial_handler)
 server.register(r'/student/([0-9]+)', user_detail_handler)
 server.register(r'/class/([0-9]+)', class_detail_handler)
+server.register(r'/class/new', new_class_handler)
 server.register(r'/update/(.+)', update_tutorial_handler)
 server.register(r'/admin/panel', admin_handler)
 server.register(r'/tutorial/new', tutorial_maker_handler)
