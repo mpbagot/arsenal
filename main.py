@@ -297,7 +297,6 @@ def tutorial_maker_handler(request, tutorial_id=0):
     elif request.request.method == 'POST':
         tut_id = int(request.get_secure_cookie('tutorial_id'))
         try:
-            print('meh')
             action = request.get_argument('action')
             if action == 'add':
                 title = request.get_argument('title')
@@ -310,7 +309,6 @@ def tutorial_maker_handler(request, tutorial_id=0):
                 resource.delete()
         except:
             text = request.get_field('text')
-            print(text)
             tutorial = Tutorial.get(tut_id)
             tutorial.text = eval(text)
             tutorial.title = tutorial.text[0]
