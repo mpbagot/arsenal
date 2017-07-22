@@ -170,7 +170,7 @@ function drop(ev) {
     dummy.innerHTML = data;
     var tag = dummy.children[1].tagName.toLowerCase();
     if (tag == 'video' || tag == "img") {
-      document.getElementById('dropper_info').innerHTML = 'Please drag '+tag+' file here to upload.';
+      document.getElementById('dropper_info').innerHTML = '<p>Please drag '+tag+' file here to upload. File size must not exceed 100MB.</p><p>The upload will not finish if the file exceeds this size.</p>';
       if (dummy.children[1].className == 'tutorial_thumb') {
         isThumbImage = true;
       }
