@@ -6,7 +6,7 @@ It is a simple system designed to teach students the basics of the Adobe Illustr
 A live version of this system is available at:
 tick-it-media.tk:8721
 
-New teacher accounts on the live site must sign up with the class password as 65885531.
+New teacher accounts on the live site must sign up with the class password as dd78ddec.
 
 Setup Instructions:
 This system relies on a single external dependency, Pillow.
