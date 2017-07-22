@@ -13,8 +13,16 @@
     article = document.getElementById('main_article');
     x = (document.getElementById('drop_menu').offsetHeight + 230)
     y = (article.offsetHeight)
-    if (x > y) {
-      footer.style.top = (x+170)+'px';
+    z = (document.getElementById('elements'))
+    if (z) {
+      z = z.offsetHeight + z.offsetTop-160;
+    }
+    if (x > y || z > y) {
+      if (z > x) {
+        footer.style.top = (z+170)+'px';
+      } else {
+        footer.style.top = (x+170)+'px';
+      }
     } else {
       footer.style.top = (y+170)+'px';
     }
