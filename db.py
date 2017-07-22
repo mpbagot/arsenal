@@ -72,7 +72,7 @@ class Tutorial:
         for block in self.text[1:]:
             if block.startswith('<p'):
                 preview = block.split('>')[1].split('<')[0]
-                if len(preview > 130):
+                if len(preview) > 130:
                     preview = preview[:130]
         return preview
 
