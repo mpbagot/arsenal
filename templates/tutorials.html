@@ -31,7 +31,7 @@
       {%end for%}
     };
     function toggleTutorials(unit_id) {
-      if (htmlArray[unit_id] && unit_id != oldSelected) {
+      if (htmlArray[unit_id] != undefined && unit_id != oldSelected) {
         list.innerHTML = htmlArray[unit_id];
         document.getElementById(unit_id).classList.add('selected');
         document.getElementById(oldSelected).classList.remove('selected');
