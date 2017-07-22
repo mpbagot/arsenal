@@ -101,6 +101,13 @@ header {
   display:block;
 }
 
+#title_heading {
+  color: white;
+  position: absolute;
+  top: 40px;
+  left: 80px;
+}
+
 #loginbutton {
   visibility: hidden;
 }
