@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <style>
+      @keyframes pulse {
+        0% {transform: translate(-50%, -50%) scale(0.3);}
+        50% {transform: translate(-50%, -50%) scale(0.2);}
+        100% {transform: translate(-50%, -50%) scale(0.3);}
+      }
+      @keyframes fly_out {
+        0% {opacity: 1; transform: translate(-50%, -50%) scale(0.3);}
+        100% {opacity: 0; transform: translate(-50%, -50%) scale(0.6);}
+      }
+      #logo_loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: pulse 4s ease-in-out;
+      }
+    </style>
+  </head>
+  <body style="background-color: black;">
+    <img src="/static/img/logo.png" id="logo_loader">
+    <script>
+      var indexHTML = '';
+      var xhr = new XMLHttpRequest();
+      var logo = document.getElementById('logo_loader');
+      xhr.open('GET', '/index', true)
+      xhr.onload = function() {
+        if (xhr.status == 200) {
+          indexHTML = xhr.responseText;
+          logo.addEventListener('animationend', startFadeOut);
+        }
+      }
+      xhr.send();
+      function startFadeOut() {
+        console.log(indexHTML);
+        logo.style.animation = 'fly_out 2s ease-in';
+        logo.removeEventListener('animationend', startFadeOut);
+        logo.addEventListener('animationend', rewritePage);
+      }
+      function rewritePage() {
+        document.write(indexHTML);
+        document.close();
+        logo.removeEventListener('animationend', rewritePage);
+      }
+    </script>
+  </body>
+</html>

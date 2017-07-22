@@ -55,10 +55,18 @@ def index_handler(request):
     Handle the index page
     '''
     user = get_login_user(request)
-    html = render_template('index.html', { 'title':'Index Page', 'user' : user,
+    html = render_template('index.html', {'title':'Index Page', 'user' : user,
                                         "tutorials" : user.getSuggestedTutorials()
                                         })
     request.write(html)
+
+@isLoggedIn
+def main_index_handler(request):
+    if request.get_secure_cookie('viewed_index'):
+        request.redirect('/index')
+        return
+    request.set_secure_cookie('viewed_index', str('true'))
+    request.write(render_template('index_loader.html', {'title':'Index Page'}))
 
 @isLoggedIn
 def tutorial_handler(request, tutorialId=1):
@@ -186,6 +194,7 @@ def signout_handler(request):
     '''
     Handle the signout process
     '''
+    request.clear_cookie('viewed_index')
     request.clear_cookie('user_id')
     request.redirect('/')
 
@@ -376,7 +385,8 @@ def is_number(n):
 # Initialise the server
 server = Server(hostname='0.0.0.0', port=80)
 # Add the URL listners here
-server.register(r'/', index_handler)
+server.register(r'/', main_index_handler)
+server.register(r'/index', index_handler)
 server.register(r'/tutorials', tutorials_handler)
 server.register(r'/svgchecker', checker_handler)
 server.register(r'/tutorial/([0-9]+)', tutorial_handler)
