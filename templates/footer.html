@@ -10,6 +10,8 @@
 <script>
   function adjustFooter() {
     footer = document.getElementById('footer');
+    span = document.getElementById('footer_info');
+    span.style.width = (footer.offsetWidth-460)+'px';
     article = document.getElementById('main_article');
     x = (document.getElementById('drop_menu').offsetHeight + 230)
     y = (article.offsetHeight)
@@ -26,8 +28,6 @@
     } else {
       footer.style.top = (y+170)+'px';
     }
-    span = document.getElementById('footer_info');
-    span.style.width = (footer.offsetWidth-460)+'px';
   }
   adjustFooter();
   window.setInterval(adjustFooter, 200);
