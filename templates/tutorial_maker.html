@@ -56,5 +56,17 @@
   </form>
   {%include footer.html%}
   <script src="/static/js/maker.js"></script>
+  <script>
+    var elements = document.getElementById('elements');
+    var elTop = elements.offsetTop;
+    window.onscroll = function() {
+      if (window.pageYOffset > elTop+200){
+        elements.style.position = 'fixed';
+        elements.style.top = '3px';
+      } else {
+        elements.style.position = 'static';
+      }
+    }
+  </script>
 </body>
 </html>
