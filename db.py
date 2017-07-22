@@ -86,6 +86,11 @@ class User:
         self.completed = completed
         self.flagged = flagged
         self.is_teacher = is_teacher
+        self.class_id = None
+        if self.is_teacher and self.id:
+            class_id = Class.getByTeacher(self.id)
+            if class_id:
+                self.class_id = class_id.id
         self.current_class = current_class
         self.password = password
         if should_hash:
@@ -296,6 +301,16 @@ class Class:
             return None
         uid, teacher_id, password = row
         return Class(teacher_id, password, uid)
+
+    @staticmethod
+    def getByTeacher(teacher_id):
+        cur.execute('''SELECT * FROM classes WHERE teacher_id = ?''', (teacher_id,))
+        row = cur.fetchone()
+        if row is None:
+            return None
+        uid, teacher_id, password = row
+        return Class(teacher_id, password, uid)
+
 
     @staticmethod
     def getUniquePassword():
