@@ -37,7 +37,9 @@
   </a>
   <aside id="drop_menu">
     <a class="links" href="/">Home</a>
-    <a class="links" href="/student/{{user.id}}">Profile</a>
+    {%if user.id != 1%}
+      <a class="links" href="/student/{{user.id}}">Profile</a>
+    {%end if%}
     <a class="links" href="/tutorials">Tutorials</a>
     <a class="links" href="/svgchecker">SVG Checker</a>
     {%if user.is_teacher%}

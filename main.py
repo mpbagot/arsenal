@@ -205,6 +205,9 @@ def user_detail_handler(request, user_id=1):
     '''
     student = User.get(int(user_id))
     user = get_login_user(request)
+    if not student or student.id == 1:
+        http404_handler(request)
+        return
     teacher = User.get(Class.get(student.current_class).teacher_id)
     tutorials = student.getTutorials()
     if Class.get(student.current_class).teacher_id == user.id or user.id == 1 or user.id == student.id:
@@ -244,6 +247,9 @@ def class_detail_handler(request, class_id=1):
     '''
     current_class = Class.get(int(class_id))
     user = get_login_user(request)
+    if not current_class:
+        http404_handler(request)
+        return
     if current_class.teacher_id == user.id or user.id == 1:
         request.write(render_template('class_list.html', {'title':'Class Details', 'user': user,
                                                         'students':current_class.getStudents(), 'class_obj':current_class}))
