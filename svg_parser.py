@@ -134,7 +134,7 @@ class TagNode:
         Check the attribute for validity
         '''
         val = val.lower()
-        error = ''
+        error = None
         # find an invalid stroke colour attribute
         if a == "stroke":
             if val.lower() not in ('red', 'rgb(255, 0, 0)', '#ff0000', '#f00', 'blue', 'rgb(0, 0, 255)', '#0000ff', '#00f', "none"):
@@ -154,18 +154,20 @@ class TagNode:
             elif self.tag_type == 'rect':
                 x = float(self.attributes.get('x'))
                 y = float(self.attributes.get('y'))
-            elif self.tag_type != 'line':
+            elif self.tag_type not in ['line', 'path']:
                 x = float(self.attributes.get('cx'))
                 y = float(self.attributes.get('cy'))
-            else:
+            elif self.tag_type == 'line':
                 x = float(self.attributes.get('x1'))
                 y = float(self.attributes.get('y1'))
+            else:
+                x, y = (0, -100)
             colour = 'black'# if self.getColour() != 'black' else 'white'
             name = self.attributes.get('id')
             class_name = self.attributes.get('class')
             if not name and not class_name:
                 name = self.tag_type[0].upper()+self.tag_type[1:]
-            if not name:
+            elif not name:
                 name = class_name
             self.errors.append([[name, x, y, colour], error])
 
@@ -200,10 +202,8 @@ class StyleNode:
         return 'StyleNode(styles={})'.format(self.style)
 
     def evaluate(self):
-        print(self.inner_text)
         self.inner_text = self.inner_text.replace('}', '}|')
         rules = [a.strip() for a in self.inner_text.split('|')]
-        print(rules)
         for rule in rules:
             rule = [a for a in rule.split('{') if a]
             if not rule:
@@ -212,7 +212,6 @@ class StyleNode:
             style = rule[1][:-1]
             for i in identifiers:
                 self.style[i] = self.style.get(i, '')+style
-        print(self.style)
         self.parser.style = self.style
 
 
