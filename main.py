@@ -233,6 +233,8 @@ def update_tutorial_handler(request, update_type):
         student.save()
         request.write(str(tutorial in student.flagged))
     elif update_type == "complete":
+        if student.id == get_login_user(request).id:
+            raise ValueError
         if tutorial in student.completed:
             del student.completed[student.completed.index(tutorial)]
         else:

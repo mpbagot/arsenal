@@ -24,6 +24,7 @@ function toggleComplete(tutorial_id, student_id) {
   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     if (xhr.status == 200) {
+      console.log('bleh');
       var box = document.getElementById('tutorial_'+tutorial_id);
       if (xhr.responseText == 'True') {
         box.classList.add('complete');
