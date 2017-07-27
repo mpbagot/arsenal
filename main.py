@@ -90,7 +90,7 @@ def tutorials_handler(request):
     '''
     user = get_login_user(request)
     html = render_template('tutorials.html', {'title':'Tutorial Index', 'user' : user,
-                                        "units" : Unit.getAll()})
+                                        "units" : Unit.getAll(), 'index': 0})
     request.write(html)
 
 @isLoggedIn

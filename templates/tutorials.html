@@ -10,24 +10,36 @@
       {%end for%}
     </nav>
     <div id="tutorial_list">
+      <table style="width: 100%;">
       {%for i in range(len(units))%}
-        {%for tutorial in units[i].getTutorials()%}
-          <a href="/tutorial/{{tutorial.id}}">
+        {%for j in range(len(units[i].getTutorials()))%}
+          {%if (j)%2 == 0%}
+            <tr>
+          {%end if%}
+          <td style="width: 49%">
+          <a href="/tutorial/{{units[i].getTutorials()[j].id}}">
             <div class="tutorial_preview">
-              <h2 class="tutorial_title">{{tutorial.title}}</h2>
-              <p class="tutorial_text">{{tutorial.getPreview()}}</p>
+              <h2 class="tutorial_title">{{units[i].getTutorials()[j].title}}</h2>
+              <p class="tutorial_text">{{units[i].getTutorials()[j].getPreview()}}</p>
             </div></a>
+          </td>
+          {%if (j)%2 == 1%}
+            </tr>
+          {%end if%}
         {%end for%}
       {%end for%}
+      </table>
     </div>
   </article>
   {%include footer.html%}
   <script>
     var list = document.getElementById('tutorial_list');
+    var print = console.log;
+    print(list.innerHTML);
     var oldSelected = 0;
     var htmlArray = {0 : list.innerHTML
       {%for i in range(len(units))%}
-        , {{units[i].id}} : '{%for tutorial in units[i].getTutorials()%}<a href="/tutorial/{{tutorial.id}}"><div class="tutorial_preview"><h2 class="tutorial_title">{{tutorial.title}}</h2><p class="tutorial_text">{{tutorial.getPreview()}}</p></div></a>{%end for%}'
+        , {{units[i].id}} : '<table style="width: 100%;">{%for j in range(len(units[i].getTutorials()))%}{%if (j)%2 == 0%}<tr>{%end if%}<td style="width: 49%"><a href="/tutorial/{{units[i].getTutorials()[j].id}}"><div class="tutorial_preview"><h2 class="tutorial_title">{{units[i].getTutorials()[j].title}}</h2><p class="tutorial_text">{{units[i].getTutorials()[j].getPreview()}}</p></div></a></td>{%if (j)%2 == 1%}</tr>{%end if%}{%end for%}</table>'
       {%end for%}
     };
     function toggleTutorials(unit_id) {
