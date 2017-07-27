@@ -14,11 +14,23 @@ function toggleMenu() {
         setTimeout(function() {
           drop_menu.className = '';
           drop_menu.style.height = '200px';
+          for (i in drop_menu.children) {
+            var child = drop_menu.children[i];
+            if (child.classList) {
+              child.classList.remove('invisible');
+            }
+          }
           mustWait = false;
         }, 200);
       }, 300);
     } else {
       drop_menu.className = 'slideOutMenuSide';
+      for (i in drop_menu.children) {
+        var child = drop_menu.children[i];
+        if (child.classList) {
+          child.classList.add('invisible');
+        }
+      }
       setTimeout(function() {
         drop_menu.style.height = '0';
         drop_menu.className = 'slideOutMenuUp';
