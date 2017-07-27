@@ -22,6 +22,22 @@
     <a href="/tutorial/editor/{{tutorial.id}}" style="color: white; padding: 15px 0; text-align: center; text-decoration: none; display:block; background-color: #FF7012; width: 90%;">Edit Tutorial</a>
   {%end if%}
 </article>
+<script>
+  var done = {{str(str(tutorial.id) in user.completed).lower()}};
+  window.onscroll = function(ev) {
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2 && !done) {
+      done = true;
+      var student_id = {{user.id}};
+      var tutorial_id = {{tutorial.id}};
+      
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/update/complete', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {}
+      xhr.send('studentid='+student_id+"&"+"tutid="+tutorial_id);
+    }
+  }
+</script>
 {%include footer.html%}
 </body>
 </html>
